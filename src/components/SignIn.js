@@ -33,7 +33,7 @@ class SignIn extends Component {
     }
 
     handleSignIn() {
-        this.props.SignIn({
+        this.props.signIn({
             email: this.state.email,
             password: this.state.password
         });

@@ -8,10 +8,17 @@ import SignIn from "./SignIn";
 class App extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            issues: [],
+            resident_signed_in: false,
+            dispatcher_signed_in: false
+        };
+
         this.signIn = this.signIn.bind(this);
         this.signUp = this.signUp.bind(this);
     }
     render() {
+        console.log(this.state);
         return (
             <div className="App">
                 <SignIn signIn={this.signIn} />
@@ -20,9 +27,14 @@ class App extends Component {
         );
     }
     signIn() {
-        axios.get("/users").then(function(response) {
-            console.log(response);
-        });
+        axios.get("/users").then(
+            function(response) {
+                console.log(response);
+                this.setState({
+                    resident_signed_in: true
+                });
+            }.bind(this)
+        );
     }
     signUp(user) {
         axios

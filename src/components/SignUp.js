@@ -23,7 +23,7 @@ class SignUp extends Component {
     render() {
         return (
             <div>
-                <div>Sign Up to fix Philly!</div>
+                <div>Sign Up</div>
                 <input
                     type="text"
                     onChange={this.updateFirstName}
@@ -90,7 +90,9 @@ class SignUp extends Component {
     updateSecondPassword(event) {
         this.setState({ second_password: event.target.value });
         if (this.state.password !== this.state.second_password) {
-            //passwords don't match
+            //change class to make message visible
+        } else {
+            //change class to make message disappear
         }
     }
     updateAddress(event) {
