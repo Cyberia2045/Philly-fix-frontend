@@ -2,6 +2,7 @@
   "name": "philly-frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "localhost:3000",
   "dependencies": {
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
