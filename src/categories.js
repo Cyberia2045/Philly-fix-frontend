@@ -1,10 +1,10 @@
-var categories = [
+let categories = [
 	'Debris',
 	'Graffiti',
 	'Poll Wire/Power Lines',
-	'Road'.
+	'Road',
 	'Rubbish',
-	'Sewage'
+	'Sewage',
 	'Sidewalk',
 	'Snow',
 	'Trees',

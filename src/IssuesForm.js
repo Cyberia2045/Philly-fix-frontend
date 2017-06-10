@@ -1,50 +1,76 @@
 import React, { Component } from 'react';
-import neighborhoods from './neighborhoods';
-import categories from './categories';
 
-class IssuesForm {
+class IssuesForm extends Component {
 
 	constructor(props) {
-		super(props)
+		super(props);
+		this.state = {
+			neighborhoods: "West Philadelphia",
+			categories: "Debris",
+			description: ""
+		}
+
+		this.updateNeighborhood = this.updateNeighborhood.bind(this);
+		this.updateCategory = this.updateCategory.bind(this);
+		this.updateDescription = this.updateDescription.bind(this);
+		this.handleCreateIssue = this.handleCreateIssue.bind(this);
+
 	}
 
 	render() {
 
-		let neighborhoods = neighborhoods.map(function(neighborhood, index) {
+		let neighborhoods = this.props.neighborhoods.map(function(neighborhood, index) {
 
 		return(
-				<div>
-					<option value={neighborhood}>{neighborhood}</option>
-				</div>
+					<option key={index} value={neighborhood}>{neighborhood}</option>
 			)
 		})
 
-		let categories = categories.map(function(category, index) {
+		let categories = this.props.categories.map(function(category, index) {
 
 			return(
-					<div>
-						<option value={category}>{category}</option>
-					</div>
+						<option key={index} value={category}>{category}</option>
 				)
 
 		})
 	
 		return(
 			<div className="issues-form-container">
-				<select name="category">
+				<select onChange={this.updateCategory} name="category">
 					{categories}
 				</select>
-				<select name="neighborhoods">
+				<select onChange={this.updateNeighborhood} name="neighborhoods">
 					{neighborhoods}
 				</select>
-				<textarea rows="5" cols="50" maxlength="140" required placeholder="What Fix Does Philly Need?" />
-				<div><button>Add Your Issue</button></div>
+				<textarea className="issues-description" rows="5" cols="50" maxLength="140" required placeholder="What Fix Does Philly Need?" onChange={this.updateDescription}></textarea>
+				<div><button onClick={this.handleCreateIssue}>Add Your Issue</button></div>
 			</div>
 			)
-
 	}
 
+	updateNeighborhood(event) {
+		this.setState({neighborhood: event.target.value})
+	}
 
+	updateCategory(event) {
+		this.setState({category: event.target.value})
+	}
+
+	updateDescription(event) {
+		this.setState({description: event.target.value})
+	}
+
+	// clearDescription(event) {
+	// 	this.setState({})
+	// }
+
+	handleCreateIssue() {
+	    this.props.createIssue({
+		    neighborhood: this.state.neighborhood,
+		    category: this.state.category,
+		    description: this.state.description
+	  }) 
+	}
 
 }
 
