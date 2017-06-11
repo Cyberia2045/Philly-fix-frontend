@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "../css/App.css";
-
+import IssuesForm from './IssuesForm'
+import neighborhoods from './neighborhoods';
+import categories from './categories';
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
 
@@ -23,9 +25,24 @@ class App extends Component {
             <div className="App">
                 <SignIn signIn={this.signIn} />
                 <SignUp signUp={this.signUp} />
+                <IssuesForm neighborhoods={neighborhoods} categories={categories} createIssue={this.createIssue} />
             </div>
+
+
         );
+
+
     }
+ 
+        createIssue(issue) {
+          axios.post("/issues", {
+            issue: issue
+          }).then(
+            function(response) {
+      }
+    );
+  }
+
     signIn() {
         axios.get("/users").then(
             function(response) {
