@@ -47,6 +47,7 @@ class App extends Component {
           });       
             return;
           }
+
           axios.post("/issues", {
             issue: issue,
             user_id: this.state.user.id
