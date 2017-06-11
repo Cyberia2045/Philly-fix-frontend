@@ -5,8 +5,8 @@ class IssuesForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			neighborhoods: "West Philadelphia",
-			categories: "Debris",
+			neighborhood: "West Philadelphia",
+			category: "Debris",
 			description: ""
 		}
 
