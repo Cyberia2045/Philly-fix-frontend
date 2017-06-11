@@ -12,16 +12,42 @@ class App extends Component {
         super(props);
         this.state = {
             issues: [],
-            resident_signed_in: false,
-            dispatcher_signed_in: false,
             user: null,
+            user_issues: [],
+            dispatcher: null,
+            dispatcher_issues: [],
             errorMsg: ""
         };
 
         this.signIn = this.signIn.bind(this);
         this.signUp = this.signUp.bind(this);
         this.createIssue = this.createIssue.bind(this);
+        this.loadUserIssues = this.loadUserIssues.bind(this);
     }
+
+
+    componentWillMount() {
+        axios.get('/issues').then(function(response) {
+            this.setState({
+                issues: response.data
+            });
+        }.bind(this));
+    }
+
+    loadUserIssues() {
+        if (this.state.user !== null) {
+            axios.get('/issue_users', {
+                params: {
+                    user_id: this.state.user.id
+                }
+            }).then(function(response) {
+                this.setState({
+                    user_issues: response.data
+                });
+            }.bind(this));
+        }
+    }
+
     render() {
         console.log(this.state);
         return (
@@ -39,36 +65,33 @@ class App extends Component {
 
 
     }
- 
-      createIssue(issue) {
+
+    createIssue(issue) {
         if (!this.state.user) {
-          this.setState({
-            errorMsg: "You must be signed in to post an issue."
-          });       
+            this.setState({
+                errorMsg: "You must be signed in to post an issue."
+            });
             return;
           }
-
-          axios.post("/issues", {
+        axios.post("/issues", {
             issue: issue,
             user_id: this.state.user.id
-          }).then(
-            function(response) {
-              this.setState({issues: response.data})
-      }.bind(this)
-    );
-  }
+        }).then(function(response) {
+            this.setState({issues: response.data});
+            this.loadUserIssues();
+        }.bind(this));
+    }
 
     signIn(user) {
       console.log(user)
         axios.get("/users", {params:{email: user.email, password: user.password}}).then(
             function(response) {
-                console.log(response);
                 if (response.data !== "") {
                   this.setState({
                       user: response.data,
-                      resident_signed_in: true,
                       errorMsg: ""
-                  });  
+                  });
+                  this.loadUserIssues();
                 } else {
                   this.setState({
                     errorMsg: "Sign in failed."
