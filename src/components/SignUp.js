@@ -28,36 +28,42 @@ class SignUp extends Component {
                     type="text"
                     onChange={this.updateFirstName}
                     placeholder="First Name"
+                    value={this.state.first_name}
                     required
                 />
                 <input
                     type="text"
                     onChange={this.updateLastName}
                     placeholder="Last Name"
+                    value={this.state.last_name}
                     required
                 />
                 <input
                     type="text"
                     onChange={this.updateEmail}
                     placeholder="Email"
+                    value={this.state.email}
                     required
                 />
                 <input
                     type="text"
                     onChange={this.updatePassword}
                     placeholder="Password"
+                    value={this.state.password}
                     required
                 />
                 <input
                     type="text"
                     onChange={this.updateSecondPassword}
                     placeholder="Repeat Password"
+                    value={this.state.second_password}
                     required
                 />
                 <input
                     type="text"
                     onChange={this.updateAddress}
                     placeholder="Address"
+                    value={this.state.address}
                     required
                 />
                 <button onClick={this.handleSignUp}>Sign Up</button>
@@ -72,6 +78,14 @@ class SignUp extends Component {
             email: this.state.email,
             password: this.state.password,
             address: this.state.address
+        });
+        this.setState({
+            first_name: "",
+            last_name: "",
+            email: "",
+            password: "",
+            second_password: "",
+            address: ""
         });
     }
 
