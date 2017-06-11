@@ -1,4 +1,4 @@
-var neighborhoods = [
+let neighborhoods = [
 
     'West Philadelphia',
     'South Philadelphia',
@@ -51,7 +51,6 @@ var neighborhoods = [
     'Callowhill',
     'Devil\'s Pocket',
     'Spruce Hill'
-
 ];
 
 export default neighborhoods;
