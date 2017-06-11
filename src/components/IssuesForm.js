@@ -5,8 +5,8 @@ class IssuesForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			neighborhood: "West Philadelphia",
-			category: "Debris",
+			neighborhood: "",
+			category: "",
 			description: ""
 		}
 
@@ -36,13 +36,13 @@ class IssuesForm extends Component {
 	
 		return(
 			<div className="issues-form-container">
-				<select onChange={this.updateCategory} name="category">
+				<select onChange={this.updateCategory} name="category" value={this.state.categories}>
 					{categories}
 				</select>
-				<select onChange={this.updateNeighborhood} name="neighborhoods">
+				<select onChange={this.updateNeighborhood} name="neighborhoods" value={this.state.neighborhoods}>
 					{neighborhoods}
 				</select>
-				<textarea className="issues-description" rows="5" cols="50" maxLength="140" required placeholder="What Fix Does Philly Need?" onChange={this.updateDescription}></textarea>
+				<textarea className="issues-description" rows="5" cols="50" maxLength="140" required placeholder="What Fix Does Philly Need?" onChange={this.updateDescription} value={this.state.description}></textarea>
 				<div><button onClick={this.handleCreateIssue}>Add Your Issue</button></div>
 			</div>
 			)
@@ -65,7 +65,8 @@ class IssuesForm extends Component {
 		    neighborhood: this.state.neighborhood,
 		    category: this.state.category,
 		    description: this.state.description
-	  }) 
+	  })
+	  	this.setState({ description: ""})
 	}
 
 }

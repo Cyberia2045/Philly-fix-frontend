@@ -66,23 +66,21 @@ class App extends Component {
 
     }
 
-        createIssue(issue) {
-          if (!this.state.user) {
+    createIssue(issue) {
+        if (!this.state.user) {
             this.setState({
-              errorMsg: "You must be signed in to post an issue."
+                errorMsg: "You must be signed in to post an issue."
             });
             return;
-          }
-          axios.post("/issues", {
+        }
+        axios.post("/issues", {
             issue: issue,
             user_id: this.state.user.id
-          }).then(
-            function(response) {
-              this.setState({issues: response.data});
-              this.loadUserIssues();
-      }.bind(this)
-    );
-  }
+        }).then(function(response) {
+            this.setState({issues: response.data});
+            this.loadUserIssues();
+        }.bind(this));
+    }
 
     signIn(user) {
       console.log(user)

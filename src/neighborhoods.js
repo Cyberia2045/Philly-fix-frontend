@@ -1,5 +1,6 @@
 let neighborhoods = [
 
+    '',
     'West Philadelphia',
     'South Philadelphia',
     'Center City',

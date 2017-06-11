@@ -1,4 +1,5 @@
 let categories = [
+	'',
 	'Debris',
 	'Graffiti',
 	'Poll Wire/Power Lines',
