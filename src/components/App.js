@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import "../css/App.css";
 import IssuesForm from './IssuesForm'
-import neighborhoods from './neighborhoods';
-import categories from './categories';
+import neighborhoods from '../neighborhoods';
+import categories from '../categories';
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
 
@@ -40,11 +40,11 @@ class App extends Component {
 
     }
  
-        createIssue(issue) {
-          if (!this.state.user) {
-            this.setState({
-              errorMsg: "You must be signed in to post an issue."
-            });       
+      createIssue(issue) {
+        if (!this.state.user) {
+          this.setState({
+            errorMsg: "You must be signed in to post an issue."
+          });       
             return;
           }
           axios.post("/issues", {
