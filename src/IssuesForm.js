@@ -60,10 +60,6 @@ class IssuesForm extends Component {
 		this.setState({description: event.target.value})
 	}
 
-	// clearDescription(event) {
-	// 	this.setState({})
-	// }
-
 	handleCreateIssue() {
 	    this.props.createIssue({
 		    neighborhood: this.state.neighborhood,
