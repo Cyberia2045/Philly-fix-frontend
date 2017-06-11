@@ -86,11 +86,6 @@ class App extends Component {
                 console.log(error);
             });
     }
-
-    // clearForm() {
-      
-    // }
-
 }
 
 export default App;
