@@ -13,6 +13,7 @@ class SignUp extends Component {
             address: "",
             errorMsg: "",
             dispatcher: false,
+            dispatcherDepartment: "",
             dispatcherVerification: ""
         };
         this.updateFirstName = this.updateFirstName.bind(this);
@@ -26,11 +27,12 @@ class SignUp extends Component {
         this.updateDispatcherVerification = this.updateDispatcherVerification.bind(
             this
         );
+        this.updateDispatcherDepartment = this.updateDispatcherDepartment.bind(
+            this
+        );
     }
 
     render() {
-        console.log(this.state);
-
         return (
             <div>
                 <div> {this.state.errorMsg} </div>
@@ -86,6 +88,7 @@ class SignUp extends Component {
                     updateDispatcherVerification={
                         this.updateDispatcherVerification
                     }
+                    updateDispatcherDepartment={this.updateDispatcherDepartment}
                 />
                 <button onClick={this.handleSignUp}>Sign Up</button>
             </div>
@@ -106,7 +109,9 @@ class SignUp extends Component {
                 password: this.state.password,
                 second_password: this.state.second_password,
                 address: this.state.address,
-                dispatcher: this.state.dispatcher
+                dispatcher: this.state.dispatcher,
+                dispatcher_verification: this.state.dispatcherVerification,
+                dispatcher_department: this.state.dispatcherDepartment
             });
             this.setState({
                 first_name: "",
@@ -115,7 +120,9 @@ class SignUp extends Component {
                 password: "",
                 second_password: "",
                 address: "",
-                dispatcher: false
+                dispatcher: false,
+                dispatcherDepartment: "",
+                dispatcherVerification: ""
             });
         }
     }
@@ -125,6 +132,9 @@ class SignUp extends Component {
     }
     updateDispatcherVerification(props) {
         this.setState({ dispatcherVerification: props.dispatcherVerification });
+    }
+    updateDispatcherDepartment(props) {
+        this.setState({ dispatcherDepartment: props.dispatcherVerification });
     }
 
     updateFirstName(event) {
@@ -145,14 +155,6 @@ class SignUp extends Component {
 
     updateSecondPassword(event) {
         this.setState({ second_password: event.target.value });
-        //this doesn't work because the state doesn't update immediately so the error message shows up only after the lengths are no longer equal.
-        // let pass1 = this.state.password;
-        // let pass2 = this.state.second_password;
-        // if (pass1 !== pass2) {
-        //     this.setState({ errorMsg: "Your passwords do not match!" });
-        // } else {
-        //     this.setState({ errorMsg: "" });
-        // }
     }
 
     updateAddress(event) {

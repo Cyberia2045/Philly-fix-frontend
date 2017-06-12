@@ -9,6 +9,9 @@ class DispatcherVerification extends Component {
         this.handleUpdateDispatcherVerification = this.handleUpdateDispatcherVerification.bind(
             this
         );
+        this.handleUpdateDispatcherDepartment = this.handleUpdateDispatcherDepartment.bind(
+            this
+        );
     }
     render() {
         if (this.state.dispatcher) {
@@ -19,6 +22,11 @@ class DispatcherVerification extends Component {
                         onChange={this.handleUpdateDispatcherVerification}
                         placeholder="Dispatcher Verification"
                     />
+                    <input
+                        type="text"
+                        onChange={this.handleUpdateDispatcherDepartment}
+                        placeholder="Department"
+                    />
                 </div>
             );
         } else {
@@ -28,6 +36,11 @@ class DispatcherVerification extends Component {
     handleUpdateDispatcherVerification(event) {
         this.props.updateDispatcherVerification({
             dispatcherVerification: event.target.value
+        });
+    }
+    handleUpdateDispatcherDepartment(event) {
+        this.props.updateDispatcherDepartment({
+            dispatcherDepartment: event.target.value
         });
     }
 

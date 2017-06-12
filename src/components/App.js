@@ -91,18 +91,21 @@ class App extends Component {
             id = this.state.user.id;
             userType = "user";
         }
-        axios.post("/issues", {
-            issue: issue,
-            id: id,
-            userType: userType
-        }).then(function(response) {
-            this.setState({issues: response.data});
-            this.loadUserIssues();
-        }.bind(this));
+        axios
+            .post("/issues", {
+                issue: issue,
+                id: id,
+                userType: userType
+            })
+            .then(
+                function(response) {
+                    this.setState({ issues: response.data });
+                    this.loadUserIssues();
+                }.bind(this)
+            );
     }
 
     signIn(user) {
-        console.log(user);
         axios
             .get("/users", {
                 params: { email: user.email, password: user.password }
@@ -124,14 +127,25 @@ class App extends Component {
             );
     }
     signUp(user) {
-        axios
-            .post("/users", { user: user })
-            .then(function(response) {
-                console.log(response);
-            })
-            .catch(function(error) {
-                console.log(error);
-            });
+        if (user.dispatcher) {
+            axios
+                .post("/dispatchers", { dispatcher: user })
+                .then(function(response) {
+                    console.log(response);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        } else {
+            axios
+                .post("/users", { user: user })
+                .then(function(response) {
+                    console.log(response);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
     }
 }
 
