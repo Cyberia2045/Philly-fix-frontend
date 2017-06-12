@@ -111,7 +111,7 @@ class SignUp extends Component {
                 address: this.state.address,
                 dispatcher: this.state.dispatcher,
                 dispatcher_verification: this.state.dispatcherVerification,
-                dispatcher_department: this.state.dispatcherDepartment
+                department: this.state.dispatcherDepartment
             });
             this.setState({
                 first_name: "",
@@ -134,7 +134,7 @@ class SignUp extends Component {
         this.setState({ dispatcherVerification: props.dispatcherVerification });
     }
     updateDispatcherDepartment(props) {
-        this.setState({ dispatcherDepartment: props.dispatcherVerification });
+        this.setState({ dispatcherDepartment: props.dispatcherDepartment });
     }
 
     updateFirstName(event) {

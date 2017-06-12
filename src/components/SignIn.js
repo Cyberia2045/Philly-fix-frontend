@@ -41,7 +41,8 @@ class SignIn extends Component {
     handleSignIn() {
         this.props.signIn({
             email: this.state.email,
-            password: this.state.password
+            password: this.state.password,
+            dispatcher: this.state.dispatcher
         });
     }
     toggleDispatcher() {
