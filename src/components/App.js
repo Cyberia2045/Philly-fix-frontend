@@ -16,8 +16,7 @@ class App extends Component {
             issues: [],
             user: null,
             user_issues: [],
-            dispatcher: null,
-            dispatcher_issues: [],
+            dispatcher: false,
             errorMsg: ""
         };
         this.signIn = this.signIn.bind(this);
@@ -37,21 +36,25 @@ class App extends Component {
     }
 
     loadUserIssues() {
-        if (this.state.user !== null) {
-            axios
-                .get("/issue_users", {
-                    params: {
-                        user_id: this.state.user.id
-                    }
-                })
-                .then(
-                    function(response) {
-                        this.setState({
-                            user_issues: response.data
-                        });
-                    }.bind(this)
-                );
+        var url;
+        if (this.state.dispatcher) {
+            url = "/issue_dispatchers";
+        } else {
+            url = "/issue_users";
         }
+        axios
+        .get(url, {
+            params: {
+                id: this.state.user.id
+            }
+        })
+        .then(
+            function(response) {
+                this.setState({
+                    user_issues: response.data
+                });
+            }.bind(this)
+        );
     }
 
     render() {
@@ -75,25 +78,21 @@ class App extends Component {
     }
 
     createIssue(issue) {
-        var id;
-        var userType;
         if (this.state.user === null) {
-            if (this.state.dispatcher === null) {
-                this.setState({
-                    errorMsg: "You must be signed in to post an issue."
-                });
-                return;
-            } else {
-                id = this.state.dispatcher.id;
-                userType = "dispatcher";
-            }
+            this.setState({
+                errorMsg: "You must be signed in to post an issue."
+            });
+            return;
+        }
+        var userType;
+        if (this.state.dispatcher) {
+            userType = "dispatcher";
         } else {
-            id = this.state.user.id;
             userType = "user";
         }
         axios.post("/issues", {
             issue: issue,
-            id: id,
+            id: this.state.user.id,
             userType: userType
         }).then(function(response) {
             this.setState({issues: response.data});
@@ -102,9 +101,14 @@ class App extends Component {
     }
 
     signIn(user) {
-        console.log(user);
+        var url;
+        if (user.dispatcher) {
+            url = "/dispatchers";
+        } else {
+            url = "/users";
+        }
         axios
-            .get("/users", {
+            .get(url, {
                 params: { email: user.email, password: user.password }
             })
             .then(
@@ -123,15 +127,33 @@ class App extends Component {
                 }.bind(this)
             );
     }
+
     signUp(user) {
-        axios
-            .post("/users", { user: user })
-            .then(function(response) {
-                console.log(response);
-            })
-            .catch(function(error) {
-                console.log(error);
-            });
+        if (user.dispatcher) {
+            axios
+                .post("/dispatchers", { dispatcher: user })
+                .then(function(response) {
+                    this.setState({
+                        user: response.data,
+                        errorMsg: ""
+                    });
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        } else {
+            axios
+                .post("/users", { user: user })
+                .then(function(response) {
+                    this.setState({
+                        user: response.data,
+                        errorMsg: ""
+                    });
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
     }
 }
 
