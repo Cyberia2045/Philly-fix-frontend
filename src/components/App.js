@@ -8,6 +8,7 @@ import neighborhoods from "../neighborhoods";
 import categories from "../categories";
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
+import GMap from "./GMaps"
 
 class App extends Component {
     constructor(props) {
@@ -69,6 +70,7 @@ class App extends Component {
                     user={this.state.user}
                     dispatcher={this.state.dispatcher}
                 />
+                <GMap style={{width: '100%', height: '400px'}}/>
             </div>
         );
     }
