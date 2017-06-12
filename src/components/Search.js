@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import Issues from "./Issues";
 
 class Search extends Component {
@@ -20,8 +19,6 @@ class Search extends Component {
         this.setState({
             issues: newProps.issues
         });
-        console.log(newProps);
-        console.log(this.state);
     }
 
     render() {
@@ -40,7 +37,7 @@ class Search extends Component {
 		return(
 			<div className="search-container">
                 <div>
-                    Filter by category and/or neighborhood:                    
+                    Filter by category and/or neighborhood:
                 </div>
 				<select onChange={this.updateCategory} value={this.state.category}>
 					{categories}

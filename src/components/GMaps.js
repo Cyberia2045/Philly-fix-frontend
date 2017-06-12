@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import GoogleMapReact from "google-map-react";
 
 class GMap extends Component {

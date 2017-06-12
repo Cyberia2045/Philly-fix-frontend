@@ -66,11 +66,12 @@ class App extends Component {
                     categories={categories}
                     issues={this.state.issues}
                 />
+                <GMap />
+                <br />
                 <div>
                     <h2>All Issues:</h2>
                     <Issues issues={this.state.issues} />
                 </div>
-                <br />
                 <Issues issues={this.state.user_issues} />
             </div>
         );
@@ -110,26 +111,6 @@ class App extends Component {
 
     }
 
-    render() {
-        return (
-            <div className="App">
-                <div className="error-msg">
-                    {this.state.errorMsg}
-                </div>
-                <SignIn signIn={this.signIn} />
-                <SignUp signUp={this.signUp} />
-                <IssuesForm
-                    neighborhoods={neighborhoods}
-                    categories={categories}
-                    createIssue={this.createIssue}
-                    user={this.state.user}
-                    dispatcher={this.state.dispatcher}
-                />
-                <GMap />
-            </div>
-        );
-    }
-
     createIssue(issue) {
         if (this.state.user === null) {
             this.setState({
@@ -143,6 +124,7 @@ class App extends Component {
         } else {
             userType = "user";
         }
+        console.log(issue);
         axios
             .post("/issues", {
                 issue: issue,
