@@ -5,13 +5,16 @@ class SignIn extends Component {
         super(props);
         this.state = {
             email: "",
-            password: ""
+            password: "",
+            dispatcher: false
         };
         this.updateEmail = this.updateEmail.bind(this);
         this.updatePassword = this.updatePassword.bind(this);
         this.handleSignIn = this.handleSignIn.bind(this);
+        this.toggleDispatcher = this.toggleDispatcher.bind(this);
     }
     render() {
+        console.log(this.state);
         return (
             <div>
                 <div>Sign In</div>
@@ -27,6 +30,9 @@ class SignIn extends Component {
                     placeholder="Password"
                     required
                 />
+                <br />
+                <label>If you are a dispatcher, check this box:</label>
+                <input type="checkbox" onChange={this.toggleDispatcher} />
                 <button onClick={this.handleSignIn}>Sign In</button>
             </div>
         );
@@ -37,6 +43,9 @@ class SignIn extends Component {
             email: this.state.email,
             password: this.state.password
         });
+    }
+    toggleDispatcher() {
+        this.setState({ dispatcher: !this.state.dispatcher });
     }
 
     updateEmail(event) {
