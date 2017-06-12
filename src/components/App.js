@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Link } from "react-router-dom";
 
 import "../css/App.css";
 import IssuesForm from "./IssuesForm";
+import Issues from "./Issues";
 import neighborhoods from "../neighborhoods";
 import categories from "../categories";
 import SignUp from "./SignUp";
@@ -26,6 +27,47 @@ class App extends Component {
         this.loadUserIssues = this.loadUserIssues.bind(this);
     }
 
+    render() {
+        console.log(this.state);
+        var signOutBtn;
+        var signInOutComponents;
+        var issuesForm;
+        if (this.state.user !== null) {
+            signOutBtn = <button onClick={this.signOut}>Sign Out</button>;
+            issuesForm = (
+                <IssuesForm
+                    neighborhoods={neighborhoods}
+                    categories={categories}
+                    createIssue={this.createIssue}
+                    user={this.state.user}
+                    dispatcher={this.state.dispatcher}
+                />
+            );
+        } else {
+            signInOutComponents = (
+                <div>
+                    <SignIn signIn={this.signIn} />
+                    <SignUp signUp={this.signUp} />
+                </div>
+            );
+        }
+
+        return (
+            <div className="App">
+                <div className="error-msg">
+                    {this.state.errorMsg}
+                </div>
+                {signOutBtn}
+                {signInOutComponents}
+                {issuesForm}
+
+                <Issues issues={this.state.issues} />
+                <br />
+                <Issues issues={this.state.user_issues} />
+            </div>
+        );
+    }
+
     componentWillMount() {
         axios.get("/issues").then(
             function(response) {
@@ -44,50 +86,18 @@ class App extends Component {
             url = "/issue_users";
         }
         axios
-        .get(url, {
-            params: {
-                id: this.state.user.id
-            }
-        })
-        .then(
-            function(response) {
-                this.setState({
-                    user_issues: response.data
-                });
-            }.bind(this)
-        );
-    }
-
-    render() {
-        console.log(this.state);
-        if (this.state.user !== null) {
-            var signOutBtn = <button onClick={this.signOut}>Sign Out</button>
-            var signInOutComponents = null
-        } else {
-            var signOutBtn = null
-            var signInOutComponents =
-                <div>
-                    <SignIn signIn={this.signIn} />
-                    <SignUp signUp={this.signUp} />
-                </div>
-        }
-
-        return (
-            <div className="App">
-                <div className="error-msg">
-                    {this.state.errorMsg}
-                </div>
-                {signOutBtn}
-                {signInOutComponents}
-                <IssuesForm
-                    neighborhoods={neighborhoods}
-                    categories={categories}
-                    createIssue={this.createIssue}
-                    user={this.state.user}
-                    dispatcher={this.state.dispatcher}
-                />
-            </div>
-        );
+            .get(url, {
+                params: {
+                    id: this.state.user.id
+                }
+            })
+            .then(
+                function(response) {
+                    this.setState({
+                        user_issues: response.data
+                    });
+                }.bind(this)
+            );
     }
 
     createIssue(issue) {
@@ -103,14 +113,18 @@ class App extends Component {
         } else {
             userType = "user";
         }
-        axios.post("/issues", {
-            issue: issue,
-            id: this.state.user.id,
-            userType: userType
-        }).then(function(response) {
-            this.setState({issues: response.data});
-            this.loadUserIssues();
-        }.bind(this));
+        axios
+            .post("/issues", {
+                issue: issue,
+                id: this.state.user.id,
+                userType: userType
+            })
+            .then(
+                function(response) {
+                    this.setState({ issues: response.data });
+                    this.loadUserIssues();
+                }.bind(this)
+            );
     }
 
     signIn(user) {
@@ -151,25 +165,29 @@ class App extends Component {
         if (user.dispatcher) {
             axios
                 .post("/dispatchers", { dispatcher: user })
-                .then(function(response) {
-                    this.setState({
-                        user: response.data,
-                        dispatcher: true,
-                        errorMsg: ""
-                    });
-                }.bind(this))
+                .then(
+                    function(response) {
+                        this.setState({
+                            user: response.data,
+                            dispatcher: true,
+                            errorMsg: ""
+                        });
+                    }.bind(this)
+                )
                 .catch(function(error) {
                     console.log(error);
                 });
         } else {
             axios
                 .post("/users", { user: user })
-                .then(function(response) {
-                    this.setState({
-                        user: response.data,
-                        errorMsg: ""
-                    });
-                }.bind(this))
+                .then(
+                    function(response) {
+                        this.setState({
+                            user: response.data,
+                            errorMsg: ""
+                        });
+                    }.bind(this)
+                )
                 .catch(function(error) {
                     console.log(error);
                 });
@@ -183,14 +201,15 @@ class App extends Component {
         } else {
             url = "/sessions/user";
         }
-        axios.delete(url).then(function(response) {
-            this.setState({
-                user: null,
-                dispatcher: false,
-                user_issues: []
-            })
-        }.bind(this));
-
+        axios.delete(url).then(
+            function(response) {
+                this.setState({
+                    user: null,
+                    dispatcher: false,
+                    user_issues: []
+                });
+            }.bind(this)
+        );
     }
 }
 

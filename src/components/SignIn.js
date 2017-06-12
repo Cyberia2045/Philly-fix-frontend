@@ -14,7 +14,6 @@ class SignIn extends Component {
         this.toggleDispatcher = this.toggleDispatcher.bind(this);
     }
     render() {
-        console.log(this.state);
         return (
             <div>
                 <div>Sign In</div>
