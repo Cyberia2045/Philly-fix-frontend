@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { BrowserRouter, Route, Link } from "react-router-dom";
+
 import "../css/App.css";
-import IssuesForm from './IssuesForm'
-import neighborhoods from '../neighborhoods';
-import categories from '../categories';
+import IssuesForm from "./IssuesForm";
+import neighborhoods from "../neighborhoods";
+import categories from "../categories";
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
 
@@ -31,50 +33,56 @@ class App extends Component {
                 </div>
                 <SignIn signIn={this.signIn} />
                 <SignUp signUp={this.signUp} />
-                <IssuesForm neighborhoods={neighborhoods} categories={categories} createIssue={this.createIssue} />
+                <IssuesForm
+                    neighborhoods={neighborhoods}
+                    categories={categories}
+                    createIssue={this.createIssue}
+                />
             </div>
-
-
         );
-
-
     }
- 
-      createIssue(issue) {
+
+    createIssue(issue) {
         if (!this.state.user) {
-          this.setState({
-            errorMsg: "You must be signed in to post an issue."
-          });       
+            this.setState({
+                errorMsg: "You must be signed in to post an issue."
+            });
             return;
-          }
-          axios.post("/issues", {
-            issue: issue,
-            user_id: this.state.user.id
-          }).then(
-            function(response) {
-              this.setState({issues: response.data})
-      }.bind(this)
-    );
-  }
+        }
+        axios
+            .post("/issues", {
+                issue: issue,
+                user_id: this.state.user.id
+            })
+            .then(
+                function(response) {
+                    this.setState({ issues: response.data });
+                }.bind(this)
+            );
+    }
 
     signIn(user) {
-      console.log(user)
-        axios.get("/users", {params:{email: user.email, password: user.password}}).then(
-            function(response) {
-                console.log(response);
-                if (response.data !== "") {
-                  this.setState({
-                      user: response.data,
-                      resident_signed_in: true,
-                      errorMsg: ""
-                  });  
-                } else {
-                  this.setState({
-                    errorMsg: "Sign in failed."
-                  });
-                }
-            }.bind(this)
-        );
+        console.log(user);
+        axios
+            .get("/users", {
+                params: { email: user.email, password: user.password }
+            })
+            .then(
+                function(response) {
+                    console.log(response);
+                    if (response.data !== "") {
+                        this.setState({
+                            user: response.data,
+                            resident_signed_in: true,
+                            errorMsg: ""
+                        });
+                    } else {
+                        this.setState({
+                            errorMsg: "Sign in failed."
+                        });
+                    }
+                }.bind(this)
+            );
     }
     signUp(user) {
         axios
