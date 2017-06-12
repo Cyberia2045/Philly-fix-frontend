@@ -33,6 +33,8 @@ class App extends Component {
         var signOutBtn;
         var signInOutComponents;
         var issuesForm;
+        var myIssues;
+        console.log(this.state);
         if (this.state.user !== null) {
             signOutBtn = <button onClick={this.signOut}>Sign Out</button>;
             issuesForm = (
@@ -43,6 +45,12 @@ class App extends Component {
                     user={this.state.user}
                     dispatcher={this.state.dispatcher}
                 />
+            );
+            myIssues = (
+                <div>
+                    <h2>My Issues:</h2>
+                    <Issues issues={this.state.user_issues} user={this.state.user} dispatcher={this.state.dispatcher} />
+                </div>
             );
         } else {
             signInOutComponents = (
@@ -70,9 +78,10 @@ class App extends Component {
                 <br />
                 <div>
                     <h2>All Issues:</h2>
-                    <Issues issues={this.state.issues} />
+                    <Issues issues={this.state.issues} user={this.state.user} dispatcher={this.state.dispatcher} />
                 </div>
-                <Issues issues={this.state.user_issues} />
+                {myIssues}
+
             </div>
         );
     }
@@ -154,7 +163,7 @@ class App extends Component {
             .then(
                 function(response) {
                     if (response.data !== "") {
-                        if (response.data.department !== null) {
+                        if (response.data.department) {
                             this.setState({
                                 dispatcher: true
                             });
