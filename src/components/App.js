@@ -125,7 +125,7 @@ class App extends Component {
                     user={this.state.user}
                     dispatcher={this.state.dispatcher}
                 />
-                <GMap style={{width: '100%', height: '400px'}}/>
+                <GMap />
             </div>
         );
     }
