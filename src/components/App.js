@@ -10,6 +10,7 @@ import categories from "../categories";
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
 import Search from "./Search";
+import GMap from "./GMaps";
 
 class App extends Component {
     constructor(props) {
@@ -29,7 +30,6 @@ class App extends Component {
     }
 
     render() {
-        // console.log(this.state);
         var signOutBtn;
         var signInOutComponents;
         var issuesForm;
@@ -93,6 +93,7 @@ class App extends Component {
         } else {
             url = "/issue_users";
         }
+
         axios
             .get(url, {
                 params: {
@@ -106,6 +107,27 @@ class App extends Component {
                     });
                 }.bind(this)
             );
+
+    }
+
+    render() {
+        return (
+            <div className="App">
+                <div className="error-msg">
+                    {this.state.errorMsg}
+                </div>
+                <SignIn signIn={this.signIn} />
+                <SignUp signUp={this.signUp} />
+                <IssuesForm
+                    neighborhoods={neighborhoods}
+                    categories={categories}
+                    createIssue={this.createIssue}
+                    user={this.state.user}
+                    dispatcher={this.state.dispatcher}
+                />
+                <GMap style={{width: '100%', height: '400px'}}/>
+            </div>
+        );
     }
 
     createIssue(issue) {
