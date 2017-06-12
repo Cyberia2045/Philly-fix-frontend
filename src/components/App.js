@@ -18,13 +18,11 @@ class App extends Component {
             dispatcher_issues: [],
             errorMsg: ""
         };
-
         this.signIn = this.signIn.bind(this);
         this.signUp = this.signUp.bind(this);
         this.createIssue = this.createIssue.bind(this);
         this.loadUserIssues = this.loadUserIssues.bind(this);
     }
-
 
     componentWillMount() {
         axios.get('/issues').then(function(response) {
@@ -57,25 +55,32 @@ class App extends Component {
                 </div>
                 <SignIn signIn={this.signIn} />
                 <SignUp signUp={this.signUp} />
-                <IssuesForm neighborhoods={neighborhoods} categories={categories} createIssue={this.createIssue} />
+                <IssuesForm neighborhoods={neighborhoods} categories={categories} createIssue={this.createIssue} user={this.state.user} dispatcher={this.state.dispatcher} />
             </div>
-
-
         );
-
-
     }
 
     createIssue(issue) {
-        if (!this.state.user) {
-            this.setState({
-                errorMsg: "You must be signed in to post an issue."
-            });
-            return;
-          }
+        var id;
+        var userType;
+        if (this.state.user === null) {
+            if (this.state.dispatcher === null) {
+                this.setState({
+                    errorMsg: "You must be signed in to post an issue."
+                });
+                return;
+            } else {
+                id = this.state.dispatcher.id;
+                userType = "dispatcher";
+            }
+        } else {
+            id = this.state.user.id;
+            userType = "user";
+        }
         axios.post("/issues", {
             issue: issue,
-            user_id: this.state.user.id
+            id: id,
+            userType: userType
         }).then(function(response) {
             this.setState({issues: response.data});
             this.loadUserIssues();
