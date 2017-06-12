@@ -7,7 +7,8 @@ class IssuesForm extends Component {
 		this.state = {
 			neighborhood: "",
 			category: "",
-			description: ""
+			description: "",
+			errorMsg: ""
 		}
 
 		this.updateNeighborhood = this.updateNeighborhood.bind(this);
@@ -44,6 +45,7 @@ class IssuesForm extends Component {
 				</select>
 				<textarea className="issues-description" rows="5" cols="50" maxLength="140" required placeholder="What Fix Does Philly Need?" onChange={this.updateDescription} value={this.state.description}></textarea>
 				<div><button onClick={this.handleCreateIssue}>Add Your Issue</button></div>
+				<div>{this.state.errorMsg}</div>
 			</div>
 			)
 	}
@@ -61,12 +63,24 @@ class IssuesForm extends Component {
 	}
 
 	handleCreateIssue() {
+	      if(this.state.category === "") {
+          this.setState({
+            errorMsg: "You must choose a category."
+          });
+          return
+          }
+        if(this.state.neighborhood === "") {
+          this.setState({
+            errorMsg: "You must choose a neighborhood."
+          });
+          return
+          }
 	    this.props.createIssue({
 		    neighborhood: this.state.neighborhood,
 		    category: this.state.category,
 		    description: this.state.description
 	  })
-	  	this.setState({ description: ""})
+	  	this.setState({ description: "", errorMsg: ""})
 	}
 
 }
