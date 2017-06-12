@@ -13,7 +13,7 @@ class SignUp extends Component {
             address: "",
             errorMsg: "",
             dispatcher: false,
-            dispatcherDepartment: "",
+            department: "",
             dispatcherVerification: ""
         };
         this.updateFirstName = this.updateFirstName.bind(this);
@@ -27,9 +27,7 @@ class SignUp extends Component {
         this.updateDispatcherVerification = this.updateDispatcherVerification.bind(
             this
         );
-        this.updateDispatcherDepartment = this.updateDispatcherDepartment.bind(
-            this
-        );
+        this.updateDepartment = this.updateDepartment.bind(this);
     }
 
     render() {
@@ -88,7 +86,7 @@ class SignUp extends Component {
                     updateDispatcherVerification={
                         this.updateDispatcherVerification
                     }
-                    updateDispatcherDepartment={this.updateDispatcherDepartment}
+                    updateDepartment={this.updateDepartment}
                 />
                 <button onClick={this.handleSignUp}>Sign Up</button>
             </div>
@@ -107,11 +105,9 @@ class SignUp extends Component {
                 last_name: this.state.last_name,
                 email: this.state.email,
                 password: this.state.password,
-                second_password: this.state.second_password,
                 address: this.state.address,
-                dispatcher: this.state.dispatcher,
                 dispatcher_verification: this.state.dispatcherVerification,
-                department: this.state.dispatcherDepartment
+                department: this.state.department
             });
             this.setState({
                 first_name: "",
@@ -121,7 +117,7 @@ class SignUp extends Component {
                 second_password: "",
                 address: "",
                 dispatcher: false,
-                dispatcherDepartment: "",
+                department: "",
                 dispatcherVerification: ""
             });
         }
@@ -133,8 +129,8 @@ class SignUp extends Component {
     updateDispatcherVerification(props) {
         this.setState({ dispatcherVerification: props.dispatcherVerification });
     }
-    updateDispatcherDepartment(props) {
-        this.setState({ dispatcherDepartment: props.dispatcherDepartment });
+    updateDepartment(props) {
+        this.setState({ department: props.department });
     }
 
     updateFirstName(event) {
