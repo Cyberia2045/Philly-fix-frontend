@@ -5,8 +5,9 @@
   "proxy": "http://localhost:3000",
   "dependencies": {
     "axios": "^0.16.2",
-    "react": "^15.5.4",
+    "react": "15.5.4",
     "react-dom": "^15.5.4",
+    "react-google-map": "^3.0.1",
     "react-router-dom": "^4.1.1"
   },
   "devDependencies": {

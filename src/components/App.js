@@ -6,6 +6,7 @@ import neighborhoods from '../neighborhoods';
 import categories from '../categories';
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
+import GMaps from "./gmaps";
 
 class App extends Component {
     constructor(props) {
