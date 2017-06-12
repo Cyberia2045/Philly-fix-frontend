@@ -9,6 +9,7 @@ import neighborhoods from "../neighborhoods";
 import categories from "../categories";
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
+import Search from "./Search";
 
 class App extends Component {
     constructor(props) {
@@ -28,7 +29,7 @@ class App extends Component {
     }
 
     render() {
-        console.log(this.state);
+        // console.log(this.state);
         var signOutBtn;
         var signInOutComponents;
         var issuesForm;
@@ -60,8 +61,15 @@ class App extends Component {
                 {signOutBtn}
                 {signInOutComponents}
                 {issuesForm}
-
-                <Issues issues={this.state.issues} />
+                <Search
+                    neighborhoods={neighborhoods}
+                    categories={categories}
+                    issues={this.state.issues}
+                />
+                <div>
+                    <h2>All Issues:</h2>
+                    <Issues issues={this.state.issues} />
+                </div>
                 <br />
                 <Issues issues={this.state.user_issues} />
             </div>
