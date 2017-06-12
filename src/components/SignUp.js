@@ -107,7 +107,8 @@ class SignUp extends Component {
                 password: this.state.password,
                 address: this.state.address,
                 dispatcher_verification: this.state.dispatcherVerification,
-                department: this.state.department
+                department: this.state.department,
+                dispatcher: this.state.dispatcher
             });
             this.setState({
                 first_name: "",
@@ -116,7 +117,6 @@ class SignUp extends Component {
                 password: "",
                 second_password: "",
                 address: "",
-                dispatcher: false,
                 department: "",
                 dispatcherVerification: ""
             });

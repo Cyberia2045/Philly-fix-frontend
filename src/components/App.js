@@ -19,6 +19,7 @@ class App extends Component {
             dispatcher: false,
             errorMsg: ""
         };
+        this.signOut = this.signOut.bind(this);
         this.signIn = this.signIn.bind(this);
         this.signUp = this.signUp.bind(this);
         this.createIssue = this.createIssue.bind(this);
@@ -59,13 +60,25 @@ class App extends Component {
 
     render() {
         console.log(this.state);
+        if (this.state.user !== null) {
+            var signOutBtn = <button onClick={this.signOut}>Sign Out</button>
+            var signInOutComponents = null
+        } else {
+            var signOutBtn = null
+            var signInOutComponents =
+                <div>
+                    <SignIn signIn={this.signIn} />
+                    <SignUp signUp={this.signUp} />
+                </div>
+        }
+
         return (
             <div className="App">
                 <div className="error-msg">
                     {this.state.errorMsg}
                 </div>
-                <SignIn signIn={this.signIn} />
-                <SignUp signUp={this.signUp} />
+                {signOutBtn}
+                {signInOutComponents}
                 <IssuesForm
                     neighborhoods={neighborhoods}
                     categories={categories}
@@ -161,6 +174,23 @@ class App extends Component {
                     console.log(error);
                 });
         }
+    }
+
+    signOut() {
+        var url;
+        if (this.state.dispatcher) {
+            url = "/sessions/dispatcher";
+        } else {
+            url = "/sessions/user";
+        }
+        axios.delete(url).then(function(response) {
+            this.setState({
+                user: null,
+                dispatcher: false,
+                user_issues: []
+            })
+        }.bind(this));
+
     }
 }
 
