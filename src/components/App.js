@@ -27,6 +27,10 @@ class App extends Component {
         this.signUp = this.signUp.bind(this);
         this.createIssue = this.createIssue.bind(this);
         this.loadUserIssues = this.loadUserIssues.bind(this);
+        this.followIssue = this.followIssue.bind(this);
+        this.unfollowIssue = this.unfollowIssue.bind(this);
+        this.resolveIssue = this.resolveIssue.bind(this);
+        this.unresolveIssue = this.unresolveIssue.bind(this);
     }
 
     render() {
@@ -35,7 +39,7 @@ class App extends Component {
         var issuesForm;
         var myIssues;
         console.log(this.state);
-        if (this.state.user !== null) {
+        if (this.state.user) {
             signOutBtn = <button onClick={this.signOut}>Sign Out</button>;
             issuesForm = (
                 <IssuesForm
@@ -44,12 +48,24 @@ class App extends Component {
                     createIssue={this.createIssue}
                     user={this.state.user}
                     dispatcher={this.state.dispatcher}
+                    resolveIssue={this.resolveIssue}
+                    unresolveIssue={this.unresolveIssue}
+                    followIssue={this.followIssue}
+                    unfollowIssue={this.unfollowIssue}
                 />
             );
             myIssues = (
                 <div>
                     <h2>My Issues:</h2>
-                    <Issues issues={this.state.user_issues} user={this.state.user} dispatcher={this.state.dispatcher} />
+                    <Issues
+                        issues={this.state.user_issues}
+                        user={this.state.user}
+                        dispatcher={this.state.dispatcher}
+                        resolveIssue={this.resolveIssue}
+                        unresolveIssue={this.unresolveIssue}
+                        followIssue={this.followIssue}
+                        unfollowIssue={this.unfollowIssue}
+                    />
                 </div>
             );
         } else {
@@ -73,12 +89,26 @@ class App extends Component {
                     neighborhoods={neighborhoods}
                     categories={categories}
                     issues={this.state.issues}
+                    user={this.state.user}
+                    dispatcher={this.state.dispatcher}
+                    resolveIssue={this.resolveIssue}
+                    unresolveIssue={this.unresolveIssue}
+                    followIssue={this.followIssue}
+                    unfollowIssue={this.unfollowIssue}
                 />
                 <GMap />
                 <br />
                 <div>
                     <h2>All Issues:</h2>
-                    <Issues issues={this.state.issues} user={this.state.user} dispatcher={this.state.dispatcher} />
+                    <Issues
+                        issues={this.state.issues}
+                        user={this.state.user}
+                        dispatcher={this.state.dispatcher}
+                        resolveIssue={this.resolveIssue}
+                        unresolveIssue={this.unresolveIssue}
+                        followIssue={this.followIssue}
+                        unfollowIssue={this.unfollowIssue}
+                    />
                 </div>
                 {myIssues}
 
@@ -231,6 +261,46 @@ class App extends Component {
                 });
             }.bind(this)
         );
+    }
+
+    resolveIssue(params) {
+        axios.post('/issue_dispatchers', {
+            issue_dispatcher: params
+        }).then(function(response) {
+            this.setState({issues: response.data})
+            this.loadUserIssues();
+        }.bind(this));
+    }
+
+    unresolveIssue(params) {
+        axios.delete('/issue_dispatchers/' + params.issue_id, {
+            params: {
+                dispatcher_id: params.dispatcher_id
+            }
+        }).then(function(response) {
+            this.setState({issues: response.data});
+            this.loadUserIssues();
+        }.bind(this));
+    }
+
+    followIssue(params) {
+        axios.post('/issue_users', {
+            issue_user: params
+        }).then(function(response) {
+            this.setState({issues: response.data});
+            this.loadUserIssues();
+        }.bind(this));
+    }
+
+    unfollowIssue(params) {
+        axios.delete('/issue_users/' + params.issue_id, {
+            params: {
+                user_id: params.user_id
+            }
+        }).then(function(response) {
+            this.setState({ issues: response.data });
+            this.loadUserIssues();
+        }.bind(this));
     }
 }
 
