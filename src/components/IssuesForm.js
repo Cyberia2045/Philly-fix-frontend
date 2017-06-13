@@ -50,10 +50,16 @@ class IssuesForm extends Component {
 				</select>
 				<input type="text" onChange={this.updateAddress} placeholder="Street address" value={this.state.address}/>
 				<textarea className="issues-description" rows="5" cols="50" maxLength="140" required placeholder="What Fix Does Philly Need?" onChange={this.updateDescription} value={this.state.description}></textarea>
+
+				<form action="" encType="multipart/form-data">
+					<div>Upload a photo:</div>
+					<input type="file" name="picture" defaultValue="fileName"></input>
+				</form>
+
 				<div><button onClick={this.handleCreateIssue}>Add Your Issue</button></div>
 				<div>{this.state.errorMsg}</div>
 			</div>
-			)
+		)
 	}
 
 	updateNeighborhood(event) {

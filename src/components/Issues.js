@@ -142,6 +142,14 @@ class Issues extends Component {
                         " dispatchers looking into this issue.";
                 }
 
+                let thumbImgStyle = {
+                    backgroundImage: "url('" + issue.image_url + "')",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    width: "70px",
+                    height: "70px"
+                }
+
                 return (
                     <div key={index} className="issue" style={attnIssue}>
                         <div className="flex">
@@ -151,6 +159,7 @@ class Issues extends Component {
                             <div className="follow-btn">{btn}</div>
                         </div>
                         <div className="flex">
+                            <div className="issue__image-thumb" style={thumbImgStyle}></div>
                             <div className="image">{issue.image}</div>
                             <div className="description">
                                 <div>{issue.description}</div>
@@ -170,16 +179,5 @@ class Issues extends Component {
         return <div>{issues}</div>;
     }
 }
-
-// const styles StyleSheet.create({
-//   bigblue: {
-// 	color: 'blue',
-// 	fontWeight: 'bold',
-// 	fontSize: 30,
-//   },
-//   red: {
-// 	color: 'red',
-//   },
-// });
 
 export default Issues;
