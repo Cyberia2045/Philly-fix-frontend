@@ -167,7 +167,7 @@ class Issues extends Component {
             }.bind(this)
         );
 
-        return <div className="my-issues-scroll-container">{issues}</div>;
+        return <div>{issues}</div>;
     }
 }
 

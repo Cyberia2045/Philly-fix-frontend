@@ -45,9 +45,8 @@
 .my-issues-container {
   position: absolute;
   left: 5px;
-  top: 61vh; }
-
-.my-issues-scroll-container {
-  overflow-y: scroll; }
+  top: 61vh;
+  overflow-y: scroll;
+  height: 39vh; }
 
 /*# sourceMappingURL=issues.css.map */

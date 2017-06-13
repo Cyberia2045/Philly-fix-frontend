@@ -25,8 +25,8 @@ class GMap extends Component {
         this.zoom = 12;
         this.styles = {
             position: "absolute",
-            width: "50vw",
-            height: "50vh",
+            width: "53vw",
+            height: "43vh",
             top: "140px"
         };
         this.state = {
