@@ -8,6 +8,10 @@ class Issues extends Component {
             user: props.user,
             dispatcher: props.dispatcher
         }
+        this.handleUnresolveIssue = this.handleUnresolveIssue.bind(this);
+        this.handleResolveIssue = this.handleResolveIssue.bind(this);
+        this.handleFollowIssue = this.handleFollowIssue.bind(this);
+        this.handleUnfollowIssue = this.handleUnfollowIssue.bind(this);
     }
 
     componentWillReceiveProps(newProps) {
@@ -18,36 +22,58 @@ class Issues extends Component {
         });
     }
 
+    handleUnresolveIssue(event) {
+        this.props.unresolveIssue({
+            dispatcher_id: this.state.user.id,
+            issue_id: event.target.value
+        });
+    }
 
+    handleResolveIssue(event) {
+        this.props.resolveIssue({
+            dispatcher_id: this.state.user.id,
+            issue_id: event.target.value
+        });
+    }
+
+    handleFollowIssue(event) {
+        this.props.followIssue({
+            user_id: this.state.user.id,
+            issue_id: event.target.value
+        });
+    }
+
+    handleUnfollowIssue(event) {
+        this.props.unfollowIssue({
+            user_id: this.state.user.id,
+            issue_id: event.target.value
+        });
+    }
 
     render() {
 
         let issues = this.state.issues.map(function(issue, index) {
             var btn;
-            if (this.state.user !== null) {
-
+            if (this.state.user) {
                 if (this.state.dispatcher) {
-                    console.log(issue);
-
 
                     let dispatcher_ids = issue.dispatchers.map(function(dispatcher) {
                         return dispatcher.id
                     });
                     if (dispatcher_ids.includes(this.state.user.id)) {
-                        btn = <button onClick={this.handleUnresolveIssue}>Unassign</button>
+                        btn = <button value={issue.id} onClick={this.handleUnresolveIssue}>Unassign</button>
                     } else {
-                        btn = <button onClick={this.handleResolveIssue}>Resolve this issue</button>
+                        btn = <button value={issue.id} onClick={this.handleResolveIssue}>Resolve this issue</button>
                     }
 
                 } else {
-                    console.log(issue);
                     let user_ids = issue.users.map(function(user) {
                         return user.id
                     });
                     if (user_ids.includes(this.state.user.id)) {
-                        btn = <div>You are following this issue.</div>
+                        btn = <button value={issue.id} onClick={this.handleUnfollowIssue}>Unfollow</button>
                     } else {
-                        btn = <button onClick={this.handleFollowIssue}>Follow</button>
+                        btn = <button value={issue.id} onClick={this.handleFollowIssue}>Follow</button>
                     }
                 }
             }
