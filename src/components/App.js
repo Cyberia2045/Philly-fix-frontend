@@ -34,6 +34,7 @@ class App extends Component {
         this.unfollowIssue = this.unfollowIssue.bind(this);
         this.resolveIssue = this.resolveIssue.bind(this);
         this.unresolveIssue = this.unresolveIssue.bind(this);
+        this.uploadImage = this.uploadImage.bind(this);
     }
 
     render() {
@@ -180,9 +181,23 @@ class App extends Component {
                 function(response) {
                     this.setState({ issues: response.data });
                     this.loadUserIssues();
+                    this.uploadImage();
                 }.bind(this)
             );
     }
+
+    uploadImage() {
+		var data = new FormData();
+        var imagedata = document.querySelector('input[type="file"]').files[0];
+        data.append("data", imagedata);
+
+        fetch("/issues/image", {
+          method: "POST",
+          body: data
+        }).then(function (res) {
+            console.log(res);
+        })
+	}
 
     signIn(user) {
         console.log(user);
