@@ -96,7 +96,14 @@ class App extends Component {
                 {signOutBtn}
                 {signInOutComponents}
                 {issuesForm}
-                <GMap />
+
+                <Search
+                    neighborhoods={neighborhoods}
+                    categories={categories}
+                    issues={this.state.issues}
+                />
+                <GMap issues = {this.state.issues} />
+
                 <br />
                 <div>
                     <h2>All Issues:</h2>
