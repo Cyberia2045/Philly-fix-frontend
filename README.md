@@ -1,26 +1,3 @@
-<BrowserRouter>
-    <div>
-        <div><Link to="/SignUp">Sign Up</Link></div>
-        <div><Link to="/SignIn">Sign In</Link></div>
-        <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/issues">Issues</Link></li>
-        </ul>
-        <div>
-            <Route exact path="/" component={Home} />
-            <Route path="/SignIn" component={SignIn} />
-            <Route path="/about" component={About} />
-            <Route path="/about" component={About} />
-            <Route
-                path="/destinations"
-                component={this.LoadDestinations}
-            />
-        </div>
-    </div>
-</BrowserRouter>
-
-
-
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
