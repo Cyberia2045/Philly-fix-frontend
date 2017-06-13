@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 
-import "../css/App.css";
 import IssuesForm from "./IssuesForm";
 import Issues from "./Issues";
 import neighborhoods from "../neighborhoods";
@@ -96,7 +95,14 @@ class App extends Component {
                 {signOutBtn}
                 {signInOutComponents}
                 {issuesForm}
-                <GMap />
+
+                <Search
+                    neighborhoods={neighborhoods}
+                    categories={categories}
+                    issues={this.state.issues}
+                />
+                <GMap issues={this.state.issues} />
+
                 <br />
                 <div>
                     <h2>All Issues:</h2>
@@ -152,7 +158,6 @@ class App extends Component {
                     });
                 }.bind(this)
             );
-
     }
 
     createIssue(issue) {
@@ -269,43 +274,59 @@ class App extends Component {
     }
 
     resolveIssue(params) {
-        axios.post('/issue_dispatchers', {
-            issue_dispatcher: params
-        }).then(function(response) {
-            this.setState({issues: response.data})
-            this.loadUserIssues();
-        }.bind(this));
+        axios
+            .post("/issue_dispatchers", {
+                issue_dispatcher: params
+            })
+            .then(
+                function(response) {
+                    this.setState({ issues: response.data });
+                    this.loadUserIssues();
+                }.bind(this)
+            );
     }
 
     unresolveIssue(params) {
-        axios.delete('/issue_dispatchers/' + params.issue_id, {
-            params: {
-                dispatcher_id: params.dispatcher_id
-            }
-        }).then(function(response) {
-            this.setState({issues: response.data});
-            this.loadUserIssues();
-        }.bind(this));
+        axios
+            .delete("/issue_dispatchers/" + params.issue_id, {
+                params: {
+                    dispatcher_id: params.dispatcher_id
+                }
+            })
+            .then(
+                function(response) {
+                    this.setState({ issues: response.data });
+                    this.loadUserIssues();
+                }.bind(this)
+            );
     }
 
     followIssue(params) {
-        axios.post('/issue_users', {
-            issue_user: params
-        }).then(function(response) {
-            this.setState({issues: response.data});
-            this.loadUserIssues();
-        }.bind(this));
+        axios
+            .post("/issue_users", {
+                issue_user: params
+            })
+            .then(
+                function(response) {
+                    this.setState({ issues: response.data });
+                    this.loadUserIssues();
+                }.bind(this)
+            );
     }
 
     unfollowIssue(params) {
-        axios.delete('/issue_users/' + params.issue_id, {
-            params: {
-                user_id: params.user_id
-            }
-        }).then(function(response) {
-            this.setState({ issues: response.data });
-            this.loadUserIssues();
-        }.bind(this));
+        axios
+            .delete("/issue_users/" + params.issue_id, {
+                params: {
+                    user_id: params.user_id
+                }
+            })
+            .then(
+                function(response) {
+                    this.setState({ issues: response.data });
+                    this.loadUserIssues();
+                }.bind(this)
+            );
     }
 
     runSearch(props) {
@@ -313,17 +334,16 @@ class App extends Component {
         let category = props.category;
         let results = this.state.issues;
         results = results.filter(function(issue) {
-            return issue.neighborhood === neighborhood || neighborhood === ''
+            return issue.neighborhood === neighborhood || neighborhood === "";
         });
         results = results.filter(function(issue) {
-            return issue.category === category || category === ''
+            return issue.category === category || category === "";
         });
         this.setState({
             searchResults: results,
             searched: true
         });
     }
-
 }
 
 export default App;

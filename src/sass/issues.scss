@@ -1,4 +1,33 @@
+*{
+    box-sizing: border-box;
+}
+.flex{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
 .issue {
     height: 100px;
     width: 400px;
+    border: 2px solid black;
+    margin: 5px 0;
+    padding: 3px;
+}
+.title{
+    font-size: 18px;
+    margin: 0;
+}
+
+.image{
+    height: 70px;
+    width: 70px;
+    margin-right: 10px;
+}
+.description{
+    font-size: 16px;
+}
+.dispatchers{
+    position: relative;
+    bottom: -35px;
 }
