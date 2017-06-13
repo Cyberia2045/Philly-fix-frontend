@@ -54,6 +54,8 @@ class Issues extends Component {
 
         let issues = this.state.issues.map(function(issue, index) {
             var btn;
+            var numDispatchersMsg;
+
             if (this.state.user) {
                 if (this.state.dispatcher) {
 
@@ -78,6 +80,15 @@ class Issues extends Component {
                 }
             }
 
+            let numDispatchers = issue.dispatchers.length;
+            if (numDispatchers === 0) {
+                numDispatchersMsg = "No dispatchers have looked into this issue."
+            } else if (numDispatchers === 1) {
+                numDispatchersMsg = "There is " + numDispatchers + " dispatcher looking into this issue."
+            } else {
+                numDispatchersMsg = "There are " + numDispatchers + " dispatchers looking into this issue."
+            }
+
             return (
                 <div key={index}>
                     {btn}
@@ -88,6 +99,7 @@ class Issues extends Component {
                     <div>{issue.lng}</div>
                     <div>{issue.description}</div>
                     <div>{issue.status}</div>
+                    {numDispatchersMsg}
                 </div>
             );
         }.bind(this));
