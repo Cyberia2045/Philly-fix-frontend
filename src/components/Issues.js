@@ -152,10 +152,12 @@ class Issues extends Component {
 
                 return (
                     <div key={index} className="issue" style={attnIssue}>
-                        {btn}
-                        <h4 className="title">
-                            {issue.category} in {issue.neighborhood}
-                        </h4>
+                        <div className="flex">
+                            <h4 className="title">
+                                {issue.category} in {issue.neighborhood}
+                            </h4>
+                            <div className="follow-btn">{btn}</div>
+                        </div>
                         <div className="flex">
                             <div className="issue__image-thumb" style={thumbImgStyle}></div>
                             <div className="image">{issue.image}</div>
@@ -174,9 +176,7 @@ class Issues extends Component {
             }.bind(this)
         );
 
-        return(
-            <div>{issues}</div>
-        )
+        return <div className="my-issues-scroll-container">{issues}</div>;
     }
 }
 
