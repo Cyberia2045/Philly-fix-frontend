@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "../css/issues.css";
 
 class Issues extends Component {
     constructor(props) {
@@ -7,7 +8,7 @@ class Issues extends Component {
             issues: props.issues,
             user: props.user,
             dispatcher: props.dispatcher
-        }
+        };
         this.handleUnresolveIssue = this.handleUnresolveIssue.bind(this);
         this.handleResolveIssue = this.handleResolveIssue.bind(this);
         this.handleFollowIssue = this.handleFollowIssue.bind(this);
@@ -51,51 +52,89 @@ class Issues extends Component {
     }
 
     render() {
-
-        let issues = this.state.issues.map(function(issue, index) {
-            var btn;
-            if (this.state.user) {
-                if (this.state.dispatcher) {
-
-                    let dispatcher_ids = issue.dispatchers.map(function(dispatcher) {
-                        return dispatcher.id
-                    });
-                    if (dispatcher_ids.includes(this.state.user.id)) {
-                        btn = <button value={issue.id} onClick={this.handleUnresolveIssue}>Unassign</button>
+        let issues = this.state.issues.map(
+            function(issue, index) {
+                var btn;
+                if (this.state.user) {
+                    if (this.state.dispatcher) {
+                        let dispatcher_ids = issue.dispatchers.map(function(
+                            dispatcher
+                        ) {
+                            return dispatcher.id;
+                        });
+                        if (dispatcher_ids.includes(this.state.user.id)) {
+                            btn = (
+                                <button
+                                    value={issue.id}
+                                    onClick={this.handleUnresolveIssue}
+                                >
+                                    Unassign
+                                </button>
+                            );
+                        } else {
+                            btn = (
+                                <button
+                                    value={issue.id}
+                                    onClick={this.handleResolveIssue}
+                                >
+                                    Resolve this issue
+                                </button>
+                            );
+                        }
                     } else {
-                        btn = <button value={issue.id} onClick={this.handleResolveIssue}>Resolve this issue</button>
-                    }
-
-                } else {
-                    let user_ids = issue.users.map(function(user) {
-                        return user.id
-                    });
-                    if (user_ids.includes(this.state.user.id)) {
-                        btn = <button value={issue.id} onClick={this.handleUnfollowIssue}>Unfollow</button>
-                    } else {
-                        btn = <button value={issue.id} onClick={this.handleFollowIssue}>Follow</button>
+                        let user_ids = issue.users.map(function(user) {
+                            return user.id;
+                        });
+                        if (user_ids.includes(this.state.user.id)) {
+                            btn = (
+                                <button
+                                    value={issue.id}
+                                    onClick={this.handleUnfollowIssue}
+                                >
+                                    Unfollow
+                                </button>
+                            );
+                        } else {
+                            btn = (
+                                <button
+                                    value={issue.id}
+                                    onClick={this.handleFollowIssue}
+                                >
+                                    Follow
+                                </button>
+                            );
+                        }
                     }
                 }
-            }
 
-            return (
-                <div key={index}>
-                    {btn}
-                    <div>{issue.category}</div>
-                    <div>{issue.neighborhood}</div>
-                    <div>{issue.image}</div>
-                    <div>{issue.lat}</div>
-                    <div>{issue.lng}</div>
-                    <div>{issue.description}</div>
-                    <div>{issue.status}</div>
-                </div>
-            );
-        }.bind(this));
+                return (
+                    <div key={index} className="issue">
+                        {btn}
+                        <div>{issue.category}</div>
+                        <div>{issue.neighborhood}</div>
+                        <div>{issue.image}</div>
+                        <div>{issue.lat}</div>
+                        <div>{issue.lng}</div>
+                        <div>{issue.description}</div>
+                        <div>{issue.status}</div>
+                    </div>
+                );
+            }.bind(this)
+        );
 
-        return(
-            <div>{issues}</div>
-        )
+        return <div>{issues}</div>;
     }
 }
+
+// const styles StyleSheet.create({
+//   bigblue: {
+// 	color: 'blue',
+// 	fontWeight: 'bold',
+// 	fontSize: 30,
+//   },
+//   red: {
+// 	color: 'red',
+//   },
+// });
 
 export default Issues;
