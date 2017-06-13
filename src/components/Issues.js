@@ -89,6 +89,13 @@ class Issues extends Component {
                 numDispatchersMsg = "There are " + numDispatchers + " dispatchers looking into this issue."
             }
 
+            let thumbImgStyle = {
+                backgroundImage: "url('" + issue.image_url + "')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                width: "100px",
+                height: "100px"
+            }
             return (
                 <div key={index}>
                     {btn}
@@ -99,6 +106,7 @@ class Issues extends Component {
                     <div>{issue.lng}</div>
                     <div>{issue.description}</div>
                     <div>{issue.status}</div>
+                    <div className="issue__image-thumb" style={thumbImgStyle}></div>
                     {numDispatchersMsg}
                 </div>
             );

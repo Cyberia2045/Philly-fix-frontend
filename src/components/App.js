@@ -97,7 +97,7 @@ class App extends Component {
                 {signOutBtn}
                 {signInOutComponents}
                 {issuesForm}
-                <GMap issues = {this.state.issues} />
+                <GMap issues={this.state.issues} />
 
                 <br />
                 <div>
@@ -180,7 +180,6 @@ class App extends Component {
             .then(
                 function(response) {
                     this.setState({ issues: response.data });
-                    this.loadUserIssues();
                     this.uploadImage();
                 }.bind(this)
             );
@@ -194,9 +193,9 @@ class App extends Component {
         fetch("/issues/image", {
           method: "POST",
           body: data
-        }).then(function (res) {
-            console.log(res);
-        })
+      }).then(function(response) {
+            this.loadUserIssues();
+        }.bind(this));
 	}
 
     signIn(user) {
