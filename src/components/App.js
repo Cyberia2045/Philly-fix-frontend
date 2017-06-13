@@ -19,6 +19,8 @@ class App extends Component {
             issues: [],
             user: null,
             user_issues: [],
+            searchResults: [],
+            searched: false,
             dispatcher: false,
             errorMsg: ""
         };
@@ -27,6 +29,7 @@ class App extends Component {
         this.signUp = this.signUp.bind(this);
         this.createIssue = this.createIssue.bind(this);
         this.loadUserIssues = this.loadUserIssues.bind(this);
+        this.runSearch = this.runSearch.bind(this);
         this.followIssue = this.followIssue.bind(this);
         this.unfollowIssue = this.unfollowIssue.bind(this);
         this.resolveIssue = this.resolveIssue.bind(this);
@@ -38,7 +41,15 @@ class App extends Component {
         var signInOutComponents;
         var issuesForm;
         var myIssues;
+        var issuesToRender;
         console.log(this.state);
+
+        if (this.state.searched) {
+            issuesToRender = this.state.searchResults;
+        } else {
+            issuesToRender = this.state.issues;
+        }
+
         if (this.state.user) {
             signOutBtn = <button onClick={this.signOut}>Sign Out</button>;
             issuesForm = (
@@ -85,23 +96,17 @@ class App extends Component {
                 {signOutBtn}
                 {signInOutComponents}
                 {issuesForm}
-                <Search
-                    neighborhoods={neighborhoods}
-                    categories={categories}
-                    issues={this.state.issues}
-                    user={this.state.user}
-                    dispatcher={this.state.dispatcher}
-                    resolveIssue={this.resolveIssue}
-                    unresolveIssue={this.unresolveIssue}
-                    followIssue={this.followIssue}
-                    unfollowIssue={this.unfollowIssue}
-                />
                 <GMap />
                 <br />
                 <div>
                     <h2>All Issues:</h2>
+                    <Search
+                        neighborhoods={neighborhoods}
+                        categories={categories}
+                        runSearch={this.runSearch}
+                    />
                     <Issues
-                        issues={this.state.issues}
+                        issues={issuesToRender}
                         user={this.state.user}
                         dispatcher={this.state.dispatcher}
                         resolveIssue={this.resolveIssue}
@@ -302,6 +307,23 @@ class App extends Component {
             this.loadUserIssues();
         }.bind(this));
     }
+
+    runSearch(props) {
+        let neighborhood = props.neighborhood;
+        let category = props.category;
+        let results = this.state.issues;
+        results = results.filter(function(issue) {
+            return issue.neighborhood === neighborhood || neighborhood === ''
+        });
+        results = results.filter(function(issue) {
+            return issue.category === category || category === ''
+        });
+        this.setState({
+            searchResults: results,
+            searched: true
+        });
+    }
+
 }
 
 export default App;
