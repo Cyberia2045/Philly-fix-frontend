@@ -34,7 +34,6 @@ class App extends Component {
         var signInOutComponents;
         var issuesForm;
         var myIssues;
-        console.log(this.state);
         if (this.state.user !== null) {
             signOutBtn = <button onClick={this.signOut}>Sign Out</button>;
             issuesForm = (
@@ -74,7 +73,7 @@ class App extends Component {
                     categories={categories}
                     issues={this.state.issues}
                 />
-                <GMap />
+                <GMap issues = {this.state.issues} />
                 <br />
                 <div>
                     <h2>All Issues:</h2>
