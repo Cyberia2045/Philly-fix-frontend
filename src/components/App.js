@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+// import { BrowserRouter, Route, Link } from "react-router-dom";
 
 import "../css/issues.css";
 import "../css/App.css";
@@ -25,8 +25,10 @@ class App extends Component {
             searched: false,
             dispatcher: false,
             errorMsg: "",
-            issuesFormOpen: false
+            issuesFormOpen: false,
+            viewUserIssues: false
         };
+        this.toggleIssuesView = this.toggleIssuesView.bind(this);
         this.signOut = this.signOut.bind(this);
         this.signIn = this.signIn.bind(this);
         this.signUp = this.signUp.bind(this);
@@ -45,8 +47,9 @@ class App extends Component {
         var signOutBtn;
         var signInOutComponents;
         var issuesForm;
-        var myIssues;
-        var issuesToRender;
+        var issuesHeader;
+        var issuesToList;
+        var currentViewIssues;
         console.log(this.state);
 
         let backdropStyle = {
@@ -60,9 +63,9 @@ class App extends Component {
         }
 
         if (this.state.searched) {
-            issuesToRender = this.state.searchResults;
+            issuesToList = this.state.searchResults;
         } else {
-            issuesToRender = this.state.issues;
+            issuesToList = this.state.issues;
         }
 
         if (this.state.user) {
@@ -88,11 +91,26 @@ class App extends Component {
                   />
               </div>
             );
-            myIssues = (
-                <div className="my-issues-container">
-                    <h2 className="issues-header">My Issues:</h2>
+            if (this.state.viewUserIssues) {
+                issuesHeader = "My Issues";
+                currentViewIssues = (
+                    <div>
+                        <Issues
+                            issues={this.state.user_issues}
+                            user={this.state.user}
+                            dispatcher={this.state.dispatcher}
+                            resolveIssue={this.resolveIssue}
+                            unresolveIssue={this.unresolveIssue}
+                            followIssue={this.followIssue}
+                            unfollowIssue={this.unfollowIssue}
+                        />
+                    </div>
+                );
+            } else {
+                issuesHeader = "All Issues";
+                currentViewIssues = (
                     <Issues
-                        issues={this.state.user_issues}
+                        issues={issuesToList}
                         user={this.state.user}
                         dispatcher={this.state.dispatcher}
                         resolveIssue={this.resolveIssue}
@@ -100,8 +118,8 @@ class App extends Component {
                         followIssue={this.followIssue}
                         unfollowIssue={this.unfollowIssue}
                     />
-                </div>
-            );
+                );
+            }
 
         } else {
             signInOutComponents = (
@@ -109,6 +127,18 @@ class App extends Component {
                     <SignIn signIn={this.signIn} />
                     <SignUp signUp={this.signUp} />
                 </div>
+            );
+            issuesHeader = "All Issues";
+            currentViewIssues = (
+                <Issues
+                    issues={issuesToList}
+                    user={this.state.user}
+                    dispatcher={this.state.dispatcher}
+                    resolveIssue={this.resolveIssue}
+                    unresolveIssue={this.unresolveIssue}
+                    followIssue={this.followIssue}
+                    unfollowIssue={this.unfollowIssue}
+                />
             );
         }
 
@@ -130,28 +160,21 @@ class App extends Component {
                 {signOutBtn}
                 {signInOutComponents}
                 {issuesForm}
-                <GMap issues={this.state.issues} />
-                <br />
-                <div className="search-issues-container">
-                    <h2 className="issues-header">All Issues:</h2>
+                {/* <GMap issues={this.state.issues} /> */}
+
+                <div className="issues-container">
+                    <h2 className="issues-header">{issuesHeader}</h2>
+                    <div className="issues-nav">
+                        <div onClick={this.toggleIssuesView}>All Issues</div>
+                        <div onClick={this.toggleIssuesView}>My Issues</div>
+                    </div>
                     <Search
                         neighborhoods={neighborhoods}
                         categories={categories}
                         runSearch={this.runSearch}
                     />
-
-                    <Issues
-                        issues={issuesToRender}
-                        user={this.state.user}
-                        dispatcher={this.state.dispatcher}
-                        resolveIssue={this.resolveIssue}
-                        unresolveIssue={this.unresolveIssue}
-                        followIssue={this.followIssue}
-                        unfollowIssue={this.unfollowIssue}
-                    />
+                    {currentViewIssues}
                 </div>
-                {myIssues}
-
             </div>
         );
     }
@@ -164,6 +187,12 @@ class App extends Component {
                 });
             }.bind(this)
         );
+    }
+
+    toggleIssuesView() {
+        this.setState({
+            viewUserIssues: !this.state.viewUserIssues
+        })
     }
 
     loadUserIssues() {
