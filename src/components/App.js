@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import axios from "axios";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 
+import "../css/issues.css";
+import "../css/App.css";
+
 import IssuesForm from "./IssuesForm";
 import Issues from "./Issues";
 import neighborhoods from "../neighborhoods";
@@ -34,6 +37,7 @@ class App extends Component {
         this.unfollowIssue = this.unfollowIssue.bind(this);
         this.resolveIssue = this.resolveIssue.bind(this);
         this.unresolveIssue = this.unresolveIssue.bind(this);
+        this.uploadImage = this.uploadImage.bind(this);
     }
 
     render() {
@@ -62,7 +66,11 @@ class App extends Component {
         }
 
         if (this.state.user) {
-            signOutBtn = <button onClick={this.signOut}>Sign Out</button>;
+            signOutBtn = (
+                <button onClick={this.signOut} className="sign-out-btn">
+                    Sign Out
+                </button>
+            );
             issuesForm = (
               <div>
                 <button onClick={() => this.openModal()}>Create New Issue</button>
@@ -81,8 +89,8 @@ class App extends Component {
               </div>
             );
             myIssues = (
-                <div>
-                    <h2>My Issues:</h2>
+                <div className="my-issues-container">
+                    <h2 className="issues-header">My Issues:</h2>
                     <Issues
                         issues={this.state.user_issues}
                         user={this.state.user}
@@ -128,12 +136,11 @@ class App extends Component {
                     categories={categories}
                     issues={this.state.issues}
                 />
-
+                
                 <GMap issues={this.state.issues} />
-
                 <br />
-                <div>
-                    <h2>All Issues:</h2>
+                <div className="search-issues-container">
+                    <h2 className="issues-header">All Issues:</h2>
                     <Search
                         neighborhoods={neighborhoods}
                         categories={categories}
@@ -212,10 +219,23 @@ class App extends Component {
             .then(
                 function(response) {
                     this.setState({ issues: response.data });
-                    this.loadUserIssues();
+                    this.uploadImage();
                 }.bind(this)
             );
     }
+
+    uploadImage() {
+		var data = new FormData();
+        var imagedata = document.querySelector('input[type="file"]').files[0];
+        data.append("data", imagedata);
+
+        fetch("/issues/image", {
+          method: "POST",
+          body: data
+      }).then(function(response) {
+            this.loadUserIssues();
+        }.bind(this));
+	}
 
     signIn(user) {
         console.log(user);

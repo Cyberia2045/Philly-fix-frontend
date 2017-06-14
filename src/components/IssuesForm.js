@@ -93,6 +93,7 @@ class IssuesForm extends Component {
         }
 
 		return(
+
 			<div style= {modalStyle} className="issues-form-container">
 				<div style= {modalContainer}>	
 					<div style={selectText}>Category: </div><select style={modalSelect} onChange={this.updateCategory} name="category" value={this.state.categories}>
@@ -103,11 +104,14 @@ class IssuesForm extends Component {
 					</select>
 					<div><input style={modalStyleAddress} type="text" onChange={this.updateAddress} placeholder="Street address" value={this.state.address}/></div>
 					<textarea style= {modalStyleTextBox} rows="5" cols="50" maxLength="140" required placeholder="What Fix Does Philly Need?" onChange={this.updateDescription} value={this.state.description}></textarea>
+					<form action="" encType="multipart/form-data">
+						<div>Upload a photo:</div>
+						<input type="file" name="picture" defaultValue="fileName"></input>
+					</form>
 					<div><button style={modalButton} onClick={this.handleCreateIssue}>Add Your Issue</button></div>
 					<div>{this.state.errorMsg}</div>
 				</div>
-			</div>
-			)
+		)
 	}
 
 	updateNeighborhood(event) {
