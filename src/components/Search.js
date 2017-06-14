@@ -6,11 +6,17 @@ class Search extends Component {
         super(props);
         this.state = {
             neighborhood: "",
-            category: ""
+            category: "",
+            viewUserIssues: false
         };
+        this.resetSearch = this.resetSearch.bind(this);
         this.updateCategory = this.updateCategory.bind(this);
         this.updateNeighborhood = this.updateNeighborhood.bind(this);
         this.handleRunSearch = this.handleRunSearch.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({viewUserIssues: nextProps.viewUserIssues});
     }
 
     render() {
@@ -39,21 +45,35 @@ class Search extends Component {
                     {categories}
                 </select>
                 <select
-                    classNme="search-neighborhood"
+                    className="search-neighborhood"
                     onChange={this.updateNeighborhood}
                     value={this.state.neighborhood}
                 >
                     {neighborhoods}
                 </select>
                 <button onClick={this.handleRunSearch}>Search</button>
+                <button onClick={this.resetSearch}>Reset</button>
             </div>
         );
+    }
+
+    resetSearch() {
+        this.setState({
+            neighborhood: "",
+            category: ""
+        });
+        this.props.runSearch({
+            neighborhood: "",
+            category: ""
+        });
+        this.props.resetSearch();
     }
 
     handleRunSearch() {
         this.props.runSearch({
             neighborhood: this.state.neighborhood,
-            category: this.state.category
+            category: this.state.category,
+            viewUserIssues: this.state.viewUserIssues
         });
     }
 

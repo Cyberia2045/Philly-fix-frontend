@@ -2,7 +2,7 @@ let categories = [
 	'',
 	'Debris',
 	'Graffiti',
-	'Poll Wire/Power Lines',
+	'Power Lines',
 	'Road',
 	'Rubbish',
 	'Sewage',

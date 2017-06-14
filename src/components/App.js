@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { BrowserRouter, Route, Link } from "react-router-dom";
-
 import "../css/App.css";
 
 import IssuesForm from "./IssuesForm";
@@ -23,13 +21,19 @@ class App extends Component {
             user_issues: [],
             searchResults: [],
             searched: false,
+            searchNeighorhood: "",
+            searchCategory: "",
             dispatcher: false,
             errorMsg: "",
             issuesFormOpen: false,
+            viewUserIssues: false,
             viewIssueDetails: false,
             currentIssueArray: [],
             signUpFormOpen: false
         };
+        this.viewUserIssues = this.viewUserIssues.bind(this);
+        this.viewAllIssues = this.viewAllIssues.bind(this);
+        this.resetSearch = this.resetSearch.bind(this);
         this.signOut = this.signOut.bind(this);
         this.signIn = this.signIn.bind(this);
         this.signUp = this.signUp.bind(this);
@@ -48,9 +52,11 @@ class App extends Component {
     render() {
         var signOutBtn;
         var signInComponent;
-        var signUpModal;
         var issuesForm;
-        var myIssues;
+        var issuesHeader;
+        var issuesToList;
+        var currentViewIssues;
+        var issuesNav;
         var issuesToRender;
         var issueDeets;
 
@@ -65,9 +71,9 @@ class App extends Component {
         };
 
         if (this.state.searched) {
-            issuesToRender = this.state.searchResults;
+            issuesToList = this.state.searchResults;
         } else {
-            issuesToRender = this.state.issues;
+            issuesToList = this.state.issues;
         }
 
         if (this.state.user) {
@@ -95,11 +101,67 @@ class App extends Component {
                     />
                 </div>
             );
+            issuesNav = (
+                <div className="issues-nav">
+                    <div onClick={this.viewAllIssues}>All Issues</div>
+                    <div onClick={this.viewUserIssues}>My Issues</div>
+                </div>
+            );
+            if (this.state.viewUserIssues) {
+                if (this.state.searched) {
+                    issuesToList = this.state.searchResults;
+                } else {
+                    issuesToList = this.state.user_issues;
+                }
+                issuesHeader = "My Issues";
+                currentViewIssues = (
+                    <div>
+                        <Issues
+                            issues={issuesToList}
+                            user={this.state.user}
+                            dispatcher={this.state.dispatcher}
+                            resolveIssue={this.resolveIssue}
+                            unresolveIssue={this.unresolveIssue}
+                            followIssue={this.followIssue}
+                            unfollowIssue={this.unfollowIssue}
+                            viewIssueDetails={this.viewIssueDetails}
+                        />
+                    </div>
+                );
+            } else {
+                issuesHeader = "All Issues";
+                currentViewIssues = (
+                    <Issues
+                        issues={issuesToList}
+                        user={this.state.user}
+                        dispatcher={this.state.dispatcher}
+                        resolveIssue={this.resolveIssue}
+                        unresolveIssue={this.unresolveIssue}
+                        followIssue={this.followIssue}
+                        unfollowIssue={this.unfollowIssue}
+                        isOpen={this.state.issuesFormOpen}
+                        viewIssueDetails={this.viewIssueDetails}
+                    />
+                );
+            }
         } else {
             signInComponent = (
                 <div>
                     <SignIn signIn={this.signIn} />
                 </div>
+            );
+            issuesHeader = "All Issues";
+            currentViewIssues = (
+                <Issues
+                    issues={issuesToList}
+                    user={this.state.user}
+                    dispatcher={this.state.dispatcher}
+                    resolveIssue={this.resolveIssue}
+                    unresolveIssue={this.unresolveIssue}
+                    followIssue={this.followIssue}
+                    unfollowIssue={this.unfollowIssue}
+                    viewIssueDetails={this.viewIssueDetails}
+                />
             );
         }
 
@@ -107,7 +169,7 @@ class App extends Component {
             if (this.state.signUpFormOpen) {
                 return (
                     <div>
-                        <SignUp />
+                        <SignUp signUp={this.signUp} />
                     </div>
                 );
             } else {
@@ -125,14 +187,6 @@ class App extends Component {
             }
         }.bind(this)();
 
-        var overlay = function() {
-            if (this.state.issuesFormOpen) {
-                return <div style={backdropStyle} />;
-            } else {
-                return <span />;
-            }
-        }.bind(this)();
-
         if (this.state.viewIssueDetails) {
             issueDeets = (
                 <IssueDetails
@@ -144,7 +198,7 @@ class App extends Component {
 
         return (
             <div className="App">
-                {overlay}
+                <div onClick={() => this.closeModal()}>{overlay}</div>
                 <div className="error-msg">
                     {this.state.errorMsg}
                 </div>
@@ -165,18 +219,10 @@ class App extends Component {
                         neighborhoods={neighborhoods}
                         categories={categories}
                         runSearch={this.runSearch}
+                        resetSearch={this.resetSearch}
+                        viewUserIssues={this.state.viewUserIssues}
                     />
-
-                    <Issues
-                        issues={issuesToRender}
-                        user={this.state.user}
-                        dispatcher={this.state.dispatcher}
-                        resolveIssue={this.resolveIssue}
-                        unresolveIssue={this.unresolveIssue}
-                        followIssue={this.followIssue}
-                        unfollowIssue={this.unfollowIssue}
-                        viewIssueDetails={this.viewIssueDetails}
-                    />
+                    {currentViewIssues}
                 </div>
             </div>
         );
@@ -190,6 +236,32 @@ class App extends Component {
                 });
             }.bind(this)
         );
+    }
+
+    viewUserIssues() {
+        this.setState({
+            viewUserIssues: true
+        });
+        if (this.state.searched) {
+            this.runSearch({
+                neighborhood: this.state.searchNeighorhood,
+                category: this.state.searchCategory,
+                viewUserIssues: true
+            });
+        }
+    }
+
+    viewAllIssues() {
+        this.setState({
+            viewUserIssues: false
+        });
+        if (this.state.searched) {
+            this.runSearch({
+                neighborhood: this.state.searchNeighorhood,
+                category: this.state.searchCategory,
+                viewUserIssues: false
+            });
+        }
     }
 
     loadUserIssues() {
@@ -238,6 +310,7 @@ class App extends Component {
                 function(response) {
                     this.setState({ issues: response.data });
                     this.uploadImage();
+                    this.closeModal();
                 }.bind(this)
             );
     }
@@ -245,6 +318,12 @@ class App extends Component {
     uploadImage() {
         var data = new FormData();
         var imagedata = document.querySelector('input[type="file"]').files[0];
+
+        if (imagedata === undefined) {
+            this.closeModal();
+            return;
+        }
+
         data.append("data", imagedata);
 
         fetch("/issues/image", {
@@ -252,6 +331,7 @@ class App extends Component {
             body: data
         }).then(
             function(response) {
+                this.closeModal();
                 this.loadUserIssues();
             }.bind(this)
         );
@@ -292,6 +372,7 @@ class App extends Component {
     }
 
     signUp(user) {
+        this.closeModal();
         if (user.dispatcher) {
             axios
                 .post("/dispatchers", { dispatcher: user })
@@ -399,19 +480,32 @@ class App extends Component {
     }
 
     runSearch(props) {
-        let neighborhood = props.neighborhood;
-        let category = props.category;
-        let results = this.state.issues;
+        let results;
+        if (props.viewUserIssues) {
+            results = this.state.user_issues;
+        } else {
+            results = this.state.issues;
+        }
+
         results = results.filter(function(issue) {
-            return issue.neighborhood === neighborhood || neighborhood === "";
+            return (
+                issue.neighborhood === props.neighborhood ||
+                props.neighborhood === ""
+            );
         });
         results = results.filter(function(issue) {
-            return issue.category === category || category === "";
+            return issue.category === props.category || props.category === "";
         });
         this.setState({
             searchResults: results,
-            searched: true
+            searched: true,
+            searchNeighorhood: props.neighborhood,
+            searchCategory: props.category
         });
+    }
+
+    resetSearch() {
+        this.setState({ searched: false });
     }
 
     viewIssueDetails(props) {
@@ -426,15 +520,15 @@ class App extends Component {
     }
 
     closeModal() {
-        this.setState({ issuesFormOpen: false });
+        if (this.state.issuesFormOpen) {
+            this.setState({ issuesFormOpen: false });
+        } else if (this.state.signUpFormOpen) {
+            this.setState({ signUpFormOpen: false });
+        }
     }
 
     openSignUp() {
         this.setState({ signUpFormOpen: true });
-    }
-
-    closeSignUp() {
-        this.setState({ signUpFormOpen: false });
     }
 }
 
