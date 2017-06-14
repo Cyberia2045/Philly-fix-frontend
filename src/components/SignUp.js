@@ -31,8 +31,23 @@ class SignUp extends Component {
     }
 
     render() {
+
+        let signUpModalStyle = {
+          width: '80%',
+          maxWidth: '600px',
+          height: '100%',
+          maxHeight: '250px',
+          position: 'absolute',
+          top: '40%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: '9999',
+          background: 'rgba(0,0,0,0.7)',
+          borderRadius: '10px'
+        }
+
         return (
-            <div>
+            <div style={signUpModalStyle}>
                 <div> {this.state.errorMsg} </div>
                 <div>Sign Up</div>
                 <input

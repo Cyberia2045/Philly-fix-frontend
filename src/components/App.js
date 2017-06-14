@@ -28,7 +28,8 @@ class App extends Component {
             dispatcher: false,
             errorMsg: "",
             issuesFormOpen: false,
-            viewUserIssues: false
+            viewUserIssues: false,
+            signUpFormOpen: false
         };
         this.viewUserIssues = this.viewUserIssues.bind(this);
         this.viewAllIssues = this.viewAllIssues.bind(this);
@@ -48,7 +49,8 @@ class App extends Component {
 
     render() {
         var signOutBtn;
-        var signInOutComponents;
+        var signInComponent;
+        var signUpModal;
         var issuesForm;
         var issuesHeader;
         var issuesToList;
@@ -139,10 +141,9 @@ class App extends Component {
             }
 
         } else {
-            signInOutComponents = (
+            signInComponent = (
                 <div>
                     <SignIn signIn={this.signIn} />
-                    <SignUp signUp={this.signUp} />
                 </div>
             );
             issuesHeader = "All Issues";
@@ -159,6 +160,31 @@ class App extends Component {
             );
         }
 
+        var signUpModal = function() {
+          if (this.state.signUpFormOpen) {
+            return (
+              <div>
+                <SignUp />
+              </div>
+              )
+          }
+          else {
+            return <span></span>
+          }
+        }.bind(this)()
+
+        var overlay = function(){
+          if (this.state.issuesFormOpen) {
+            return  <div style={backdropStyle}></div>
+          }
+          else if (this.state.signUpFormOpen) {
+            return  <div style={backdropStyle}></div>
+          }
+          else {
+            return <span></span>
+          }
+        }.bind(this)()
+
         var overlay = function() {
             if (this.state.issuesFormOpen) {
                 return <div style={backdropStyle} />;
@@ -173,13 +199,17 @@ class App extends Component {
                 <div className="error-msg">
                     {this.state.errorMsg}
                 </div>
+                <button onClick={() => this.openSignUp()}>Join</button>
                 {signOutBtn}
-                {signInOutComponents}
+                {signInComponent}
                 {issuesForm}
+                {signUpModal}
+
                 <GMap issues={this.state.issues} />
                 <div className="issues-container">
                     {issuesNav}
                     <h2 className="issues-header">{issuesHeader}</h2>
+
                     <Search
                         neighborhoods={neighborhoods}
                         categories={categories}
@@ -266,7 +296,7 @@ class App extends Component {
             userType = "user";
         }
         console.log(issue);
-        axios
+          axios
             .post("/issues", {
                 issue: issue,
                 id: this.state.user.id,
@@ -469,6 +499,15 @@ class App extends Component {
     closeModal() {
         this.setState({ issuesFormOpen: false });
     }
+
+    openSignUp() {
+      this.setState({ signUpFormOpen: true })
+    }
+
+    closeSignUp() {
+      this.setState({ signUpFormOpen: false })
+    }
+
 }
 
 export default App;
