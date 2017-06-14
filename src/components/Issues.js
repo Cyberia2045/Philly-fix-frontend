@@ -13,42 +13,7 @@ class Issues extends Component {
         this.handleResolveIssue = this.handleResolveIssue.bind(this);
         this.handleFollowIssue = this.handleFollowIssue.bind(this);
         this.handleUnfollowIssue = this.handleUnfollowIssue.bind(this);
-    }
-
-    componentWillReceiveProps(newProps) {
-        this.setState({
-            issues: newProps.issues,
-            user: newProps.user,
-            dispatcher: newProps.dispatcher
-        });
-    }
-
-    handleUnresolveIssue(event) {
-        this.props.unresolveIssue({
-            dispatcher_id: this.state.user.id,
-            issue_id: event.target.value
-        });
-    }
-
-    handleResolveIssue(event) {
-        this.props.resolveIssue({
-            dispatcher_id: this.state.user.id,
-            issue_id: event.target.value
-        });
-    }
-
-    handleFollowIssue(event) {
-        this.props.followIssue({
-            user_id: this.state.user.id,
-            issue_id: event.target.value
-        });
-    }
-
-    handleUnfollowIssue(event) {
-        this.props.unfollowIssue({
-            user_id: this.state.user.id,
-            issue_id: event.target.value
-        });
+        // this.handleViewIssueDetails = this.handleViewIssueDetails.bind(this);
     }
 
     render() {
@@ -145,9 +110,21 @@ class Issues extends Component {
                 let thumbImg = {
                     backgroundImage: "url('" + issue.image_url + "')"
                 };
-
+                console.log([{ issue }, { btn }, { attnIssue }, { thumbImg }]);
+                function handleViewIssueDetails() {
+                    this.props.viewIssueDetails([
+                        { issue },
+                        { attnIssue },
+                        { thumbImg }
+                    ]);
+                }
                 return (
-                    <div key={index} className="issue" style={attnIssue}>
+                    <div
+                        key={index}
+                        className="issue"
+                        onClick={handleViewIssueDetails.bind(this)}
+                        style={attnIssue}
+                    >
                         <div className="issue-thumbnail" style={thumbImg}>
                             <h4 className="title">
                                 {issue.category} in {issue.neighborhood}
@@ -160,6 +137,42 @@ class Issues extends Component {
         );
 
         return <div className="issues-container flex">{issues}</div>;
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.setState({
+            issues: newProps.issues,
+            user: newProps.user,
+            dispatcher: newProps.dispatcher
+        });
+    }
+
+    handleUnresolveIssue(event) {
+        this.props.unresolveIssue({
+            dispatcher_id: this.state.user.id,
+            issue_id: event.target.value
+        });
+    }
+
+    handleResolveIssue(event) {
+        this.props.resolveIssue({
+            dispatcher_id: this.state.user.id,
+            issue_id: event.target.value
+        });
+    }
+
+    handleFollowIssue(event) {
+        this.props.followIssue({
+            user_id: this.state.user.id,
+            issue_id: event.target.value
+        });
+    }
+
+    handleUnfollowIssue(event) {
+        this.props.unfollowIssue({
+            user_id: this.state.user.id,
+            issue_id: event.target.value
+        });
     }
 }
 

@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import axios from "axios";
 // import { BrowserRouter, Route, Link } from "react-router-dom";
 
-import "../css/issues.css";
 import "../css/App.css";
 
 import IssuesForm from "./IssuesForm";
 import Issues from "./Issues";
+import IssueDetails from "./IssueDetails";
 import neighborhoods from "../neighborhoods";
 import categories from "../categories";
 import SignUp from "./SignUp";
@@ -29,6 +29,8 @@ class App extends Component {
             errorMsg: "",
             issuesFormOpen: false,
             viewUserIssues: false,
+            viewIssueDetails: false,
+            currentIssueArray: [],
             signUpFormOpen: false
         };
         this.viewUserIssues = this.viewUserIssues.bind(this);
@@ -45,6 +47,7 @@ class App extends Component {
         this.resolveIssue = this.resolveIssue.bind(this);
         this.unresolveIssue = this.unresolveIssue.bind(this);
         this.uploadImage = this.uploadImage.bind(this);
+        this.viewIssueDetails = this.viewIssueDetails.bind(this);
     }
 
     render() {
@@ -56,6 +59,8 @@ class App extends Component {
         var issuesToList;
         var currentViewIssues;
         var issuesNav;
+        var issuesToRender;
+        var issueDeets;
         console.log(this.state);
 
         let backdropStyle = {
@@ -161,37 +166,32 @@ class App extends Component {
         }
 
         var signUpModal = function() {
-          if (this.state.signUpFormOpen) {
-            return (
-              <div>
-                <SignUp />
-              </div>
-              )
-          }
-          else {
-            return <span></span>
-          }
-        }.bind(this)()
-
-        var overlay = function(){
-          if (this.state.issuesFormOpen) {
-            return  <div style={backdropStyle}></div>
-          }
-          else if (this.state.signUpFormOpen) {
-            return  <div style={backdropStyle}></div>
-          }
-          else {
-            return <span></span>
-          }
-        }.bind(this)()
+            if (this.state.signUpFormOpen) {
+                return (
+                    <div>
+                        <SignUp />
+                    </div>
+                );
+            } else {
+                return <span />;
+            }
+        }.bind(this)();
 
         var overlay = function() {
             if (this.state.issuesFormOpen) {
+                return <div style={backdropStyle} />;
+            } else if (this.state.signUpFormOpen) {
                 return <div style={backdropStyle} />;
             } else {
                 return <span />;
             }
         }.bind(this)();
+
+        if (this.state.viewIssueDetails) {
+            issueDeets = (
+                <IssueDetails issueArray={this.state.currentIssueArray} />
+            );
+        }
 
         return (
             <div className="App">
@@ -203,6 +203,7 @@ class App extends Component {
                 {signOutBtn}
                 {signInComponent}
                 {issuesForm}
+                {issueDeets}
                 {signUpModal}
 
                 <GMap issues={this.state.issues} />
@@ -296,7 +297,7 @@ class App extends Component {
             userType = "user";
         }
         console.log(issue);
-          axios
+        axios
             .post("/issues", {
                 issue: issue,
                 id: this.state.user.id,
@@ -492,6 +493,11 @@ class App extends Component {
         this.setState({searched: false});
     }
 
+    viewIssueDetails(props) {
+        console.log("app", props);
+        this.setState({ viewIssueDetails: true, currentIssueArray: props });
+    }
+
     openModal() {
         this.setState({ issuesFormOpen: true });
     }
@@ -501,13 +507,12 @@ class App extends Component {
     }
 
     openSignUp() {
-      this.setState({ signUpFormOpen: true })
+        this.setState({ signUpFormOpen: true });
     }
 
     closeSignUp() {
-      this.setState({ signUpFormOpen: false })
+        this.setState({ signUpFormOpen: false });
     }
-
 }
 
 export default App;
