@@ -5,8 +5,9 @@ class Search extends Component {
         super(props);
         this.state = {
             neighborhood: "",
-            category: ""
+            category: "",
         };
+        this.resetSearch = this.resetSearch.bind(this);
         this.updateCategory = this.updateCategory.bind(this);
         this.updateNeighborhood = this.updateNeighborhood.bind(this);
         this.handleRunSearch = this.handleRunSearch.bind(this);
@@ -43,8 +44,20 @@ class Search extends Component {
                     {neighborhoods}
                 </select>
                 <button onClick={this.handleRunSearch}>Search</button>
+                <button onClick={this.resetSearch}>Reset</button>
             </div>
         );
+    }
+
+    resetSearch() {
+        this.setState({
+            neighborhood: "",
+            category: ""
+        });
+        this.props.runSearch({
+            neighborhood: "",
+            category: ""
+        });
     }
 
     handleRunSearch() {

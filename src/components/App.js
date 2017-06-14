@@ -92,6 +92,12 @@ class App extends Component {
               </div>
             );
             if (this.state.viewUserIssues) {
+                //
+                // if (this.state.searched) {
+                //     issuesToList = this.state.searchResults;
+                // } else {
+                //     issuesToList = this.state.user_issues;
+                // }
                 issuesHeader = "My Issues";
                 currentViewIssues = (
                     <div>
@@ -163,11 +169,11 @@ class App extends Component {
                 {/* <GMap issues={this.state.issues} /> */}
 
                 <div className="issues-container">
-                    <h2 className="issues-header">{issuesHeader}</h2>
                     <div className="issues-nav">
                         <div onClick={this.toggleIssuesView}>All Issues</div>
                         <div onClick={this.toggleIssuesView}>My Issues</div>
                     </div>
+                    <h2 className="issues-header">{issuesHeader}</h2>
                     <Search
                         neighborhoods={neighborhoods}
                         categories={categories}
@@ -403,7 +409,14 @@ class App extends Component {
     runSearch(props) {
         let neighborhood = props.neighborhood;
         let category = props.category;
-        let results = this.state.issues;
+        let results;
+
+        if (this.state.viewUserIssues) {
+            results = this.state.user_issues;
+        } else {
+            results = this.state.issues;
+        }
+
         results = results.filter(function(issue) {
             return issue.neighborhood === neighborhood || neighborhood === "";
         });
