@@ -142,41 +142,24 @@ class Issues extends Component {
                         " dispatchers looking into this issue.";
                 }
 
-                let thumbImgStyle = {
-                    backgroundImage: "url('" + issue.image_url + "')",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    width: "70px",
-                    height: "70px"
-                }
+                let thumbImg = {
+                    backgroundImage: "url('" + issue.image_url + "')"
+                };
 
                 return (
                     <div key={index} className="issue" style={attnIssue}>
-                        <div className="flex">
+                        <div className="issue-thumbnail" style={thumbImg}>
                             <h4 className="title">
                                 {issue.category} in {issue.neighborhood}
                             </h4>
                             <div className="follow-btn">{btn}</div>
-                        </div>
-                        <div className="flex">
-                            <div className="issue__image-thumb" style={thumbImgStyle}></div>
-                            <div className="image">{issue.image}</div>
-                            <div className="description">
-                                <div>{issue.description}</div>
-                                <div
-                                    className="dispatchers"
-                                    style={attnDispatcher}
-                                >
-                                    {numDispatchersMsg}
-                                </div>
-                            </div>
                         </div>
                     </div>
                 );
             }.bind(this)
         );
 
-        return <div>{issues}</div>;
+        return <div className="issues-container flex">{issues}</div>;
     }
 }
 

@@ -45,7 +45,6 @@ class App extends Component {
     }
 
     render() {
-
         var signOutBtn;
         var signInOutComponents;
         var issuesForm;
@@ -55,14 +54,14 @@ class App extends Component {
         console.log(this.state);
 
         let backdropStyle = {
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          top: '0px',
-          left: '0px',
-          zIndex: '9998',
-          background: 'rgba(0, 0, 0, 0.8)'
-        }
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            top: "0px",
+            left: "0px",
+            zIndex: "9998",
+            background: "rgba(0, 0, 0, 0.8)"
+        };
 
         if (this.state.searched) {
             issuesToList = this.state.searchResults;
@@ -125,6 +124,7 @@ class App extends Component {
                         unresolveIssue={this.unresolveIssue}
                         followIssue={this.followIssue}
                         unfollowIssue={this.unfollowIssue}
+                        isOpen={this.state.issuesFormOpen}
                     />
                 );
             }
@@ -150,18 +150,17 @@ class App extends Component {
             );
         }
 
-        var overlay = function(){
-          if (this.state.issuesFormOpen) {
-            return  <div style={backdropStyle}></div>
-          }
-          else {
-            return <span></span>
-          }
-        }.bind(this)()
+        var overlay = function() {
+            if (this.state.issuesFormOpen) {
+                return <div style={backdropStyle} />;
+            } else {
+                return <span />;
+            }
+        }.bind(this)();
 
         return (
             <div className="App">
-              {overlay}
+                {overlay}
                 <div className="error-msg">
                     {this.state.errorMsg}
                 </div>
@@ -169,7 +168,6 @@ class App extends Component {
                 {signInOutComponents}
                 {issuesForm}
                 <GMap issues={this.state.issues} />
-
                 <div className="issues-container">
                     <div className="issues-nav">
                         <div onClick={this.viewAllIssues}>All Issues</div>
@@ -262,17 +260,19 @@ class App extends Component {
     }
 
     uploadImage() {
-		var data = new FormData();
+        var data = new FormData();
         var imagedata = document.querySelector('input[type="file"]').files[0];
         data.append("data", imagedata);
 
         fetch("/issues/image", {
-          method: "POST",
-          body: data
-      }).then(function(response) {
-            this.loadUserIssues();
-        }.bind(this));
-	}
+            method: "POST",
+            body: data
+        }).then(
+            function(response) {
+                this.loadUserIssues();
+            }.bind(this)
+        );
+    }
 
     signIn(user) {
         console.log(user);
@@ -443,13 +443,12 @@ class App extends Component {
     }
 
     openModal() {
-      this.setState({ issuesFormOpen: true })
+        this.setState({ issuesFormOpen: true });
     }
 
     closeModal() {
-      this.setState({ issuesFormOpen: false })
+        this.setState({ issuesFormOpen: false });
     }
-
 }
 
 export default App;

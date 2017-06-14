@@ -23,10 +23,9 @@ class GMap extends Component {
         this.center = { lat: 39.9524, lng: -75.1636 };
         this.zoom = 12;
         this.styles = {
-            position: "absolute",
-            width: "53vw",
-            height: "43vh",
-            top: "140px"
+            position: "relative",
+            width: "100vw",
+            height: "43vh"
         };
         this.state = {
             issues: props.issues
