@@ -42,6 +42,8 @@ class IssuesForm extends Component {
 						)
 				})
 
+// ----------Modal Styling----------
+
 		    let modalStyle = {
 		    	width: '80%',
 		    	maxWidth: '600px',
@@ -60,7 +62,8 @@ class IssuesForm extends Component {
         	width: '50%',
         	maxHeight: '100%',
         	margin: '0 auto',
-        	marginTop: '5px'
+        	marginTop: '5px',
+        	marginBottom: '10px'
         }
 
         let modalSelect = {
@@ -92,6 +95,8 @@ class IssuesForm extends Component {
         	borderRadius: '10px'
         }
 
+// ----------End Modal Styling----------
+
 		return(
 
 			<div style= {modalStyle} className="issues-form-container">
@@ -111,6 +116,7 @@ class IssuesForm extends Component {
 					<div><button style={modalButton} onClick={this.handleCreateIssue}>Add Your Issue</button></div>
 					<div>{this.state.errorMsg}</div>
 				</div>
+			</div>	
 		)
 	}
 

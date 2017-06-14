@@ -25,7 +25,8 @@ class App extends Component {
             searched: false,
             dispatcher: false,
             errorMsg: "",
-            issuesFormOpen: false
+            issuesFormOpen: false,
+            signUpFormOpen: false
         };
         this.signOut = this.signOut.bind(this);
         this.signIn = this.signIn.bind(this);
@@ -43,7 +44,8 @@ class App extends Component {
     render() {
 
         var signOutBtn;
-        var signInOutComponents;
+        var signInComponent;
+        var signUpModal;
         var issuesForm;
         var myIssues;
         var issuesToRender;
@@ -104,16 +106,31 @@ class App extends Component {
             );
 
         } else {
-            signInOutComponents = (
+            signInComponent = (
                 <div>
                     <SignIn signIn={this.signIn} />
-                    <SignUp signUp={this.signUp} />
                 </div>
             );
         }
 
+        var signUpModal = function() {
+          if (this.state.signUpFormOpen) {
+            return (
+              <div>
+                <SignUp />
+              </div>
+              )
+          }
+          else {
+            return <span></span>
+          }
+        }.bind(this)()
+
         var overlay = function(){
           if (this.state.issuesFormOpen) {
+            return  <div style={backdropStyle}></div>
+          }
+          else if (this.state.signUpFormOpen) {
             return  <div style={backdropStyle}></div>
           }
           else {
@@ -127,16 +144,18 @@ class App extends Component {
                 <div className="error-msg">
                     {this.state.errorMsg}
                 </div>
+                <button onClick={() => this.openSignUp()}>Join</button>
                 {signOutBtn}
-                {signInOutComponents}
+                {signInComponent}
                 {issuesForm}
+                {signUpModal}
 
                 <Search
                     neighborhoods={neighborhoods}
                     categories={categories}
                     issues={this.state.issues}
                 />
-                
+
                 <GMap issues={this.state.issues} />
                 <br />
                 <div className="search-issues-container">
@@ -210,7 +229,7 @@ class App extends Component {
             userType = "user";
         }
         console.log(issue);
-        axios
+          axios
             .post("/issues", {
                 issue: issue,
                 id: this.state.user.id,
@@ -400,6 +419,14 @@ class App extends Component {
 
     closeModal() {
       this.setState({ issuesFormOpen: false })
+    }
+
+    openSignUp() {
+      this.setState({ signUpFormOpen: true })
+    }
+
+    closeSignUp() {
+      this.setState({ signUpFormOpen: false })
     }
 
 }
