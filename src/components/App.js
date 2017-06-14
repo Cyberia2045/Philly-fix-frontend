@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-// import { BrowserRouter, Route, Link } from "react-router-dom";
-
 import "../css/App.css";
 
 import IssuesForm from "./IssuesForm";
@@ -53,7 +51,6 @@ class App extends Component {
     render() {
         var signOutBtn;
         var signInComponent;
-        var signUpModal;
         var issuesForm;
         var issuesHeader;
         var issuesToList;
@@ -166,36 +163,33 @@ class App extends Component {
         }
 
         var signUpModal = function() {
-            if (this.state.signUpFormOpen) {
-                return (
-                    <div>
-                        <SignUp />
-                    </div>
-                );
-            } else {
-                return <span />;
-            }
-        }.bind(this)();
+          if (this.state.signUpFormOpen) {
+            return (
+              <div>
+                <SignUp signUp={this.signUp}/>
+              </div>
+              )
+          }
+          else {
+            return <span></span>
+          }
+        }.bind(this)()
 
-        var overlay = function() {
-            if (this.state.issuesFormOpen) {
-                return <div style={backdropStyle} />;
-            } else if (this.state.signUpFormOpen) {
-                return <div style={backdropStyle} />;
-            } else {
-                return <span />;
-            }
-        }.bind(this)();
-
-        if (this.state.viewIssueDetails) {
-            issueDeets = (
-                <IssueDetails issueArray={this.state.currentIssueArray} />
-            );
-        }
+        var overlay = function(){
+          if (this.state.issuesFormOpen) {
+            return  <div style={backdropStyle}></div>
+          }
+          else if (this.state.signUpFormOpen) {
+            return  <div style={backdropStyle}></div>
+          }
+          else {
+            return <span></span>
+          }
+        }.bind(this)()
 
         return (
             <div className="App">
-                {overlay}
+                <div onClick={() => this.closeModal()}>{overlay}</div>
                 <div className="error-msg">
                     {this.state.errorMsg}
                 </div>
@@ -296,6 +290,7 @@ class App extends Component {
         } else {
             userType = "user";
         }
+        
         console.log(issue);
         axios
             .post("/issues", {
@@ -307,6 +302,7 @@ class App extends Component {
                 function(response) {
                     this.setState({ issues: response.data });
                     this.uploadImage();
+                    this.closeModal();
                 }.bind(this)
             );
     }
@@ -314,6 +310,12 @@ class App extends Component {
     uploadImage() {
         var data = new FormData();
         var imagedata = document.querySelector('input[type="file"]').files[0];
+        
+        if (imagedata === undefined) {
+          this.closeModal();
+          return
+        }
+
         data.append("data", imagedata);
 
         fetch("/issues/image", {
@@ -321,6 +323,7 @@ class App extends Component {
             body: data
         }).then(
             function(response) {
+                this.closeModal();
                 this.loadUserIssues();
             }.bind(this)
         );
@@ -361,6 +364,7 @@ class App extends Component {
     }
 
     signUp(user) {
+      this.closeModal();
         if (user.dispatcher) {
             axios
                 .post("/dispatchers", { dispatcher: user })
@@ -503,16 +507,18 @@ class App extends Component {
     }
 
     closeModal() {
+      if(this.state.issuesFormOpen) {
         this.setState({ issuesFormOpen: false });
+      }
+      else if(this.state.signUpFormOpen) {
+        this.setState({ signUpFormOpen: false });
+      }
     }
 
     openSignUp() {
         this.setState({ signUpFormOpen: true });
     }
 
-    closeSignUp() {
-        this.setState({ signUpFormOpen: false });
-    }
 }
 
 export default App;
