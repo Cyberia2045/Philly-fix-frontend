@@ -58,6 +58,7 @@ class Search extends Component {
             neighborhood: "",
             category: ""
         });
+        this.props.resetSearch();
     }
 
     handleRunSearch() {

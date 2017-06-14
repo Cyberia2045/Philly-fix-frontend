@@ -28,7 +28,9 @@ class App extends Component {
             issuesFormOpen: false,
             viewUserIssues: false
         };
-        this.toggleIssuesView = this.toggleIssuesView.bind(this);
+        this.viewUserIssues = this.viewUserIssues.bind(this);
+        this.viewAllIssues = this.viewAllIssues.bind(this);
+        this.resetSearch = this.resetSearch.bind(this);
         this.signOut = this.signOut.bind(this);
         this.signIn = this.signIn.bind(this);
         this.signUp = this.signUp.bind(this);
@@ -92,12 +94,12 @@ class App extends Component {
               </div>
             );
             if (this.state.viewUserIssues) {
-                //
-                // if (this.state.searched) {
-                //     issuesToList = this.state.searchResults;
-                // } else {
-                //     issuesToList = this.state.user_issues;
-                // }
+
+                if (this.state.searched) {
+                    issuesToList = this.state.searchResults;
+                } else {
+                    issuesToList = this.state.user_issues;
+                }
                 issuesHeader = "My Issues";
                 currentViewIssues = (
                     <div>
@@ -166,18 +168,19 @@ class App extends Component {
                 {signOutBtn}
                 {signInOutComponents}
                 {issuesForm}
-                {/* <GMap issues={this.state.issues} /> */}
+                <GMap issues={this.state.issues} />
 
                 <div className="issues-container">
                     <div className="issues-nav">
-                        <div onClick={this.toggleIssuesView}>All Issues</div>
-                        <div onClick={this.toggleIssuesView}>My Issues</div>
+                        <div onClick={this.viewAllIssues}>All Issues</div>
+                        <div onClick={this.viewUserIssues}>My Issues</div>
                     </div>
                     <h2 className="issues-header">{issuesHeader}</h2>
                     <Search
                         neighborhoods={neighborhoods}
                         categories={categories}
                         runSearch={this.runSearch}
+                        resetSearch={this.resetSearch}
                     />
                     {currentViewIssues}
                 </div>
@@ -195,10 +198,16 @@ class App extends Component {
         );
     }
 
-    toggleIssuesView() {
+    viewUserIssues() {
         this.setState({
-            viewUserIssues: !this.state.viewUserIssues
-        })
+            viewUserIssues: true
+        });
+    }
+
+    viewAllIssues() {
+        this.setState({
+            viewUserIssues: false
+        });
     }
 
     loadUserIssues() {
@@ -427,6 +436,10 @@ class App extends Component {
             searchResults: results,
             searched: true
         });
+    }
+
+    resetSearch() {
+        this.setState({searched: false});
     }
 
     openModal() {
