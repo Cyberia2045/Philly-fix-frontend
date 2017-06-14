@@ -42,7 +42,6 @@ class App extends Component {
     }
 
     render() {
-
         var signOutBtn;
         var signInComponent;
         var signUpModal;
@@ -52,14 +51,14 @@ class App extends Component {
         console.log(this.state);
 
         let backdropStyle = {
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          top: '0px',
-          left: '0px',
-          zIndex: '9998',
-          background: 'rgba(0, 0, 0, 0.8)'
-        }
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            top: "0px",
+            left: "0px",
+            zIndex: "9998",
+            background: "rgba(0, 0, 0, 0.8)"
+        };
 
         if (this.state.searched) {
             issuesToRender = this.state.searchResults;
@@ -74,37 +73,24 @@ class App extends Component {
                 </button>
             );
             issuesForm = (
-              <div>
-                <button onClick={() => this.openModal()}>Create New Issue</button>
-                  <IssuesForm
-                      neighborhoods={neighborhoods}
-                      categories={categories}
-                      createIssue={this.createIssue}
-                      user={this.state.user}
-                      dispatcher={this.state.dispatcher}
-                      resolveIssue={this.resolveIssue}
-                      unresolveIssue={this.unresolveIssue}
-                      followIssue={this.followIssue}
-                      unfollowIssue={this.unfollowIssue}
-                      isOpen ={this.state.issuesFormOpen}
-                  />
-              </div>
-            );
-            myIssues = (
-                <div className="my-issues-container">
-                    <h2 className="issues-header">My Issues:</h2>
-                    <Issues
-                        issues={this.state.user_issues}
+                <div>
+                    <button onClick={() => this.openModal()}>
+                        Create New Issue
+                    </button>
+                    <IssuesForm
+                        neighborhoods={neighborhoods}
+                        categories={categories}
+                        createIssue={this.createIssue}
                         user={this.state.user}
                         dispatcher={this.state.dispatcher}
                         resolveIssue={this.resolveIssue}
                         unresolveIssue={this.unresolveIssue}
                         followIssue={this.followIssue}
                         unfollowIssue={this.unfollowIssue}
+                        isOpen={this.state.issuesFormOpen}
                     />
                 </div>
             );
-
         } else {
             signInComponent = (
                 <div>
@@ -113,6 +99,7 @@ class App extends Component {
             );
         }
 
+<<<<<<< HEAD
         var signUpModal = function() {
           if (this.state.signUpFormOpen) {
             return (
@@ -137,10 +124,19 @@ class App extends Component {
             return <span></span>
           }
         }.bind(this)()
+=======
+        var overlay = function() {
+            if (this.state.issuesFormOpen) {
+                return <div style={backdropStyle} />;
+            } else {
+                return <span />;
+            }
+        }.bind(this)();
+>>>>>>> 0476dec95c56b4a9ba3905f6dc68e54ab5829f03
 
         return (
             <div className="App">
-              {overlay}
+                {overlay}
                 <div className="error-msg">
                     {this.state.errorMsg}
                 </div>
@@ -150,16 +146,18 @@ class App extends Component {
                 {issuesForm}
                 {signUpModal}
 
+<<<<<<< HEAD
                 <Search
                     neighborhoods={neighborhoods}
                     categories={categories}
                     issues={this.state.issues}
                 />
 
+=======
+>>>>>>> 0476dec95c56b4a9ba3905f6dc68e54ab5829f03
                 <GMap issues={this.state.issues} />
                 <br />
                 <div className="search-issues-container">
-                    <h2 className="issues-header">All Issues:</h2>
                     <Search
                         neighborhoods={neighborhoods}
                         categories={categories}
@@ -176,8 +174,6 @@ class App extends Component {
                         unfollowIssue={this.unfollowIssue}
                     />
                 </div>
-                {myIssues}
-
             </div>
         );
     }
@@ -244,17 +240,19 @@ class App extends Component {
     }
 
     uploadImage() {
-		var data = new FormData();
+        var data = new FormData();
         var imagedata = document.querySelector('input[type="file"]').files[0];
         data.append("data", imagedata);
 
         fetch("/issues/image", {
-          method: "POST",
-          body: data
-      }).then(function(response) {
-            this.loadUserIssues();
-        }.bind(this));
-	}
+            method: "POST",
+            body: data
+        }).then(
+            function(response) {
+                this.loadUserIssues();
+            }.bind(this)
+        );
+    }
 
     signIn(user) {
         console.log(user);
@@ -414,12 +412,13 @@ class App extends Component {
     }
 
     openModal() {
-      this.setState({ issuesFormOpen: true })
+        this.setState({ issuesFormOpen: true });
     }
 
     closeModal() {
-      this.setState({ issuesFormOpen: false })
+        this.setState({ issuesFormOpen: false });
     }
+<<<<<<< HEAD
 
     openSignUp() {
       this.setState({ signUpFormOpen: true })
@@ -429,6 +428,8 @@ class App extends Component {
       this.setState({ signUpFormOpen: false })
     }
 
+=======
+>>>>>>> 0476dec95c56b4a9ba3905f6dc68e54ab5829f03
 }
 
 export default App;
