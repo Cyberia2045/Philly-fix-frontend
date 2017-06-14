@@ -1,9 +1,13 @@
 .App{
-    width: 900px;
-    margin: 0 auto;
 }
 .sign-out-btn{
     position: absolute;
     right: 10px;
     top: 10px;
+}
+
+.flex{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }

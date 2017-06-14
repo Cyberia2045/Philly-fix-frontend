@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "../css/search.css";
 
 class Search extends Component {
     constructor(props) {
@@ -26,7 +27,7 @@ class Search extends Component {
         });
 
         return (
-            <div className="search-container">
+            <div className="search-container flex">
                 <div>
                     Filter by category and/or neighborhood:
                 </div>
