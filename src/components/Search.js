@@ -39,7 +39,7 @@ class Search extends Component {
                     {categories}
                 </select>
                 <select
-                    classNme="search-neighborhood"
+                    className="search-neighborhood"
                     onChange={this.updateNeighborhood}
                     value={this.state.neighborhood}
                 >

@@ -44,7 +44,6 @@ class App extends Component {
     render() {
         var signOutBtn;
         var signInComponent;
-        var signUpModal;
         var issuesForm;
         var myIssues;
         var issuesToRender;
@@ -99,7 +98,6 @@ class App extends Component {
             );
         }
 
-<<<<<<< HEAD
         var signUpModal = function() {
           if (this.state.signUpFormOpen) {
             return (
@@ -124,15 +122,6 @@ class App extends Component {
             return <span></span>
           }
         }.bind(this)()
-=======
-        var overlay = function() {
-            if (this.state.issuesFormOpen) {
-                return <div style={backdropStyle} />;
-            } else {
-                return <span />;
-            }
-        }.bind(this)();
->>>>>>> 0476dec95c56b4a9ba3905f6dc68e54ab5829f03
 
         return (
             <div className="App">
@@ -146,15 +135,6 @@ class App extends Component {
                 {issuesForm}
                 {signUpModal}
 
-<<<<<<< HEAD
-                <Search
-                    neighborhoods={neighborhoods}
-                    categories={categories}
-                    issues={this.state.issues}
-                />
-
-=======
->>>>>>> 0476dec95c56b4a9ba3905f6dc68e54ab5829f03
                 <GMap issues={this.state.issues} />
                 <br />
                 <div className="search-issues-container">
@@ -418,7 +398,6 @@ class App extends Component {
     closeModal() {
         this.setState({ issuesFormOpen: false });
     }
-<<<<<<< HEAD
 
     openSignUp() {
       this.setState({ signUpFormOpen: true })
@@ -428,8 +407,6 @@ class App extends Component {
       this.setState({ signUpFormOpen: false })
     }
 
-=======
->>>>>>> 0476dec95c56b4a9ba3905f6dc68e54ab5829f03
 }
 
 export default App;
