@@ -25,33 +25,87 @@ class IssuesForm extends Component {
 
 	render() {
 
+		if (this.props.isOpen === false)
+			return null
+
 		let neighborhoods = this.props.neighborhoods.map(function(neighborhood, index) {
 
 		return(
 					<option key={index} value={neighborhood}>{neighborhood}</option>
-			)
-		})
+					)
+				})
 
 		let categories = this.props.categories.map(function(category, index) {
 
 			return(
 						<option key={index} value={category}>{category}</option>
-				)
+						)
+				})
 
-		})
+		    let modalStyle = {
+		    	width: '80%',
+		    	maxWidth: '600px',
+		    	height: '100%',
+		    	maxHeight: '250px',
+          position: 'absolute',
+          top: '40%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: '9999',
+          background: 'rgba(0,0,0,0.7)',
+          borderRadius: '10px'
+        }
+
+        let modalContainer = {
+        	width: '50%',
+        	maxHeight: '100%',
+        	margin: '0 auto',
+        	marginTop: '5px'
+        }
+
+        let modalSelect = {
+        	backgroundColor: 'rgba(255,255,255,0.8)'
+        }
+
+        let modalStyleAddress = {
+        	backgroundColor: 'rgba(255,255,255,0.8)',
+        	width: '80%',
+        	maxWidth: '400px',
+        	borderRadius: '10px',
+        	marginTop: '5px'
+        }
+
+        let selectText = {
+        	color: 'white',
+        	fontFamily: 'Futura'
+        }
+
+        let modalStyleTextBox = {
+        	maxWidth: '100%',
+        	backgroundColor: 'rgba(255,255,255,0.8)',
+        	borderRadius: '10px',
+        	marginTop: '5px'
+        }
+
+        let modalButton = {
+        	backgroundColor: 'rgba(255,255,255,0.8)',
+        	borderRadius: '10px'
+        }
 
 		return(
-			<div className="issues-form-container">
-				<select onChange={this.updateCategory} name="category" value={this.state.categories}>
-					{categories}
-				</select>
-				<select onChange={this.updateNeighborhood} name="neighborhoods" value={this.state.neighborhoods}>
-					{neighborhoods}
-				</select>
-				<input type="text" onChange={this.updateAddress} placeholder="Street address" value={this.state.address}/>
-				<textarea className="issues-description" rows="5" cols="50" maxLength="140" required placeholder="What Fix Does Philly Need?" onChange={this.updateDescription} value={this.state.description}></textarea>
-				<div><button onClick={this.handleCreateIssue}>Add Your Issue</button></div>
-				<div>{this.state.errorMsg}</div>
+			<div style= {modalStyle} className="issues-form-container">
+				<div style= {modalContainer}>	
+					<div style={selectText}>Category: </div><select style={modalSelect} onChange={this.updateCategory} name="category" value={this.state.categories}>
+						{categories}
+					</select>
+					<div style={selectText}>Neighborhood: </div><select style={modalSelect} onChange={this.updateNeighborhood} name="neighborhoods" value={this.state.neighborhoods}>
+						{neighborhoods}
+					</select>
+					<div><input style={modalStyleAddress} type="text" onChange={this.updateAddress} placeholder="Street address" value={this.state.address}/></div>
+					<textarea style= {modalStyleTextBox} rows="5" cols="50" maxLength="140" required placeholder="What Fix Does Philly Need?" onChange={this.updateDescription} value={this.state.description}></textarea>
+					<div><button style={modalButton} onClick={this.handleCreateIssue}>Add Your Issue</button></div>
+					<div>{this.state.errorMsg}</div>
+				</div>
 			</div>
 			)
 	}

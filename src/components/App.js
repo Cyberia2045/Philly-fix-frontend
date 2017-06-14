@@ -21,7 +21,8 @@ class App extends Component {
             searchResults: [],
             searched: false,
             dispatcher: false,
-            errorMsg: ""
+            errorMsg: "",
+            issuesFormOpen: false
         };
         this.signOut = this.signOut.bind(this);
         this.signIn = this.signIn.bind(this);
@@ -36,12 +37,23 @@ class App extends Component {
     }
 
     render() {
+
         var signOutBtn;
         var signInOutComponents;
         var issuesForm;
         var myIssues;
         var issuesToRender;
         console.log(this.state);
+
+        let backdropStyle = {
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          top: '0px',
+          left: '0px',
+          zIndex: '9998',
+          background: 'rgba(0, 0, 0, 0.8)'
+        }
 
         if (this.state.searched) {
             issuesToRender = this.state.searchResults;
@@ -52,17 +64,21 @@ class App extends Component {
         if (this.state.user) {
             signOutBtn = <button onClick={this.signOut}>Sign Out</button>;
             issuesForm = (
-                <IssuesForm
-                    neighborhoods={neighborhoods}
-                    categories={categories}
-                    createIssue={this.createIssue}
-                    user={this.state.user}
-                    dispatcher={this.state.dispatcher}
-                    resolveIssue={this.resolveIssue}
-                    unresolveIssue={this.unresolveIssue}
-                    followIssue={this.followIssue}
-                    unfollowIssue={this.unfollowIssue}
-                />
+              <div>
+                <button onClick={() => this.openModal()}>Create New Issue</button>
+                  <IssuesForm
+                      neighborhoods={neighborhoods}
+                      categories={categories}
+                      createIssue={this.createIssue}
+                      user={this.state.user}
+                      dispatcher={this.state.dispatcher}
+                      resolveIssue={this.resolveIssue}
+                      unresolveIssue={this.unresolveIssue}
+                      followIssue={this.followIssue}
+                      unfollowIssue={this.unfollowIssue}
+                      isOpen ={this.state.issuesFormOpen}
+                  />
+              </div>
             );
             myIssues = (
                 <div>
@@ -78,6 +94,7 @@ class App extends Component {
                     />
                 </div>
             );
+
         } else {
             signInOutComponents = (
                 <div>
@@ -87,8 +104,18 @@ class App extends Component {
             );
         }
 
+        var overlay = function(){
+          if (this.state.issuesFormOpen) {
+            return  <div style={backdropStyle}></div>
+          }
+          else {
+            return <span></span>
+          }
+        }.bind(this)()
+
         return (
             <div className="App">
+              {overlay}
                 <div className="error-msg">
                     {this.state.errorMsg}
                 </div>
@@ -101,6 +128,7 @@ class App extends Component {
                     categories={categories}
                     issues={this.state.issues}
                 />
+
                 <GMap issues={this.state.issues} />
 
                 <br />
@@ -111,6 +139,7 @@ class App extends Component {
                         categories={categories}
                         runSearch={this.runSearch}
                     />
+
                     <Issues
                         issues={issuesToRender}
                         user={this.state.user}
@@ -344,6 +373,15 @@ class App extends Component {
             searched: true
         });
     }
+
+    openModal() {
+      this.setState({ issuesFormOpen: true })
+    }
+
+    closeModal() {
+      this.setState({ issuesFormOpen: false })
+    }
+
 }
 
 export default App;
