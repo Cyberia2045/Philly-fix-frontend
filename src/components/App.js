@@ -118,7 +118,7 @@ class App extends Component {
 
                 <GMap issues={this.state.issues} />
                 <br />
-                <div className="issues-container">
+                <div className="search-issues-container">
                     <Search
                         neighborhoods={neighborhoods}
                         categories={categories}

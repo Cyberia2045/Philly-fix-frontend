@@ -32,12 +32,14 @@ class Search extends Component {
                     Filter by category and/or neighborhood:
                 </div>
                 <select
+                    className="search-category"
                     onChange={this.updateCategory}
                     value={this.state.category}
                 >
                     {categories}
                 </select>
                 <select
+                    classNme="search-neighborhood"
                     onChange={this.updateNeighborhood}
                     value={this.state.neighborhood}
                 >

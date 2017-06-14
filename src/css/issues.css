@@ -1,6 +1,10 @@
 * {
   box-sizing: border-box; }
 
+.search-issues-container {
+  margin: 0 auto;
+  width: 95vw; }
+
 .issues-header {
   margin: 10px 0; }
 
@@ -35,12 +39,5 @@
 .dispatchers {
   position: relative;
   bottom: -35px; }
-
-.my-issues-container {
-  position: absolute;
-  left: 5px;
-  top: 61vh;
-  overflow-y: scroll;
-  height: 39vh; }
 
 /*# sourceMappingURL=issues.css.map */
