@@ -20,6 +20,7 @@ class Issues extends Component {
         let issues = this.state.issues.map(
             function(issue, index) {
                 var btn;
+                var btnId;
                 var numDispatchersMsg;
 
                 if (this.state.user) {
@@ -38,6 +39,7 @@ class Issues extends Component {
                                     Unassign
                                 </button>
                             );
+                            btnId = "Resolve";
                         } else {
                             btn = (
                                 <button
@@ -47,6 +49,7 @@ class Issues extends Component {
                                     Resolve this issue
                                 </button>
                             );
+                            btnId = "Unresolve";
                         }
                     } else {
                         let user_ids = issue.users.map(function(user) {
@@ -61,29 +64,17 @@ class Issues extends Component {
                                     Unfollow
                                 </button>
                             );
+                            btnId = "Unfollow";
                         } else {
-                            let user_ids = issue.users.map(function(user) {
-                                return user.id;
-                            });
-                            if (user_ids.includes(this.state.user.id)) {
-                                btn = (
-                                    <button
-                                        value={issue.id}
-                                        onClick={this.handleUnfollowIssue}
-                                    >
-                                        Unfollow
-                                    </button>
-                                );
-                            } else {
-                                btn = (
-                                    <button
-                                        value={issue.id}
-                                        onClick={this.handleFollowIssue}
-                                    >
-                                        Follow
-                                    </button>
-                                );
-                            }
+                            btn = (
+                                <button
+                                    value={issue.id}
+                                    onClick={this.handleFollowIssue}
+                                >
+                                    Follow
+                                </button>
+                            );
+                            btnId = "Follow";
                         }
                     }
                 }
@@ -110,12 +101,12 @@ class Issues extends Component {
                 let thumbImg = {
                     backgroundImage: "url('" + issue.image_url + "')"
                 };
-                console.log([{ issue }, { btn }, { attnIssue }, { thumbImg }]);
                 function handleViewIssueDetails() {
                     this.props.viewIssueDetails([
                         { issue },
                         { attnIssue },
-                        { thumbImg }
+                        { thumbImg },
+                        { btnId }
                     ]);
                 }
                 return (

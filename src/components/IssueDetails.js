@@ -8,17 +8,57 @@ class IssueDetails extends Component {
         this.state = {
             issue: props.issueArray[0].issue,
             attnIssue: props.issueArray[1].attnIssue,
-            thumbImg: props.issueArray[2].thumbImg
+            thumbImg: props.issueArray[2].thumbImg,
+            btnId: props.issueArray[3].btnId
         };
+        this.handleHideViewIssueDetails = this.handleHideViewIssueDetails.bind(
+            this
+        );
     }
     render() {
-        console.log("component issuedetials");
+        var btn;
+        if (this.state.btnId === "Resolve") {
+            btn = (
+                <button
+                    value={this.state.issue.id}
+                    onClick={this.handleUnresolveIssue}
+                >
+                    Unassign
+                </button>
+            );
+        } else if (this.state.btnId === "Unresolve") {
+            btn = (
+                <button
+                    value={this.state.issue.id}
+                    onClick={this.handleResolveIssue}
+                >
+                    Resolve this issue
+                </button>
+            );
+        } else if (this.state.btnId === "Follow") {
+            btn = (
+                <button
+                    value={this.state.issue.id}
+                    onClick={this.handleUnfollowIssue}
+                >
+                    Unfollow
+                </button>
+            );
+        } else if (this.state.btnId === "Unfollow") {
+            btn = (
+                <button
+                    value={this.state.issue.id}
+                    onClick={this.handleFollowIssue}
+                >
+                    Follow
+                </button>
+            );
+        }
         return (
             <div style={this.state.attnIssue} className="details-issue">
                 <div className="details-text flex">
-
                     <h4 className="details-title">
-                        {this.state.issue.title}
+                        {this.state.issue.category}
                         {" "}
                         in
                         {" "}
@@ -34,11 +74,30 @@ class IssueDetails extends Component {
                         Dispatchers resolving:
                         {this.state.issue.dispatchers.length}
                     </div>
-                    <div className="follow-btn" />
+                    <div className="details-follow"> {btn} </div>
+                    <div
+                        className="details-close"
+                        onClick={this.handleHideViewIssueDetails}
+                    >
+                        Close Issue{" "}
+                    </div>
+                    <div
+                        className="details-image"
+                        style={this.state.thumbImg}
+                    />
                 </div>
-                <div className="details-image" style={this.state.thumbImg} />
             </div>
         );
+    }
+    componentWillReceiveProps(newProps) {
+        this.setState({
+            issue: newProps.issueArray[0].issue,
+            attnIssue: newProps.issueArray[1].attnIssue,
+            thumbImg: newProps.issueArray[2].thumbImg
+        });
+    }
+    handleHideViewIssueDetails() {
+        this.props.hideViewIssueDetails();
     }
 }
 

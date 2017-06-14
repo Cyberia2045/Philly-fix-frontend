@@ -1,16 +1,52 @@
 .details-issue{
-    width: 350px;
-    height: 40vh;
-    position: relative;
+    width: 50vw;
+    height: 25vh;
+    position: fixed;
+    right: 0px;
+    top: 100px;
+    z-index: 5;
+    background-color: rgb(228, 228, 228);
 }
 .details-image{
-    width: 450px;
-    height: 40vh;
+    position: fixed;
+    top: 100px;
+    left: 0;
+    width: 50vw;
+    height: 68vh;
     background-size: cover;
     background-position: center;
 }
-.details-text{}
-.details-title{}
-.details-description{}
-.details-users{}
-.details-dispatchers{}
+.details-text{
+    padding: 10px;
+}
+.details-title{
+    width: 100%;
+    font-size: 24px;
+    margin: 5px 0;
+}
+.details-description{
+    width: 100%;
+}
+.details-users{
+    position: absolute;
+    bottom: 25px;
+    left: 10px;
+}
+.details-dispatchers{
+    position: absolute;
+    bottom: 25px;
+}
+.details-follow{
+    position: absolute;
+    bottom: 80px;
+    right: 51px;
+}
+.details-close{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: lightgrey;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+}

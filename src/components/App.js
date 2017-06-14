@@ -42,6 +42,7 @@ class App extends Component {
         this.unresolveIssue = this.unresolveIssue.bind(this);
         this.uploadImage = this.uploadImage.bind(this);
         this.viewIssueDetails = this.viewIssueDetails.bind(this);
+        this.hideViewIssueDetails = this.hideViewIssueDetails.bind(this);
     }
 
     render() {
@@ -52,7 +53,6 @@ class App extends Component {
         var myIssues;
         var issuesToRender;
         var issueDeets;
-        console.log(this.state);
 
         let backdropStyle = {
             position: "absolute",
@@ -135,7 +135,10 @@ class App extends Component {
 
         if (this.state.viewIssueDetails) {
             issueDeets = (
-                <IssueDetails issueArray={this.state.currentIssueArray} />
+                <IssueDetails
+                    issueArray={this.state.currentIssueArray}
+                    hideViewIssueDetails={this.hideViewIssueDetails}
+                />
             );
         }
 
@@ -152,7 +155,10 @@ class App extends Component {
                 {issueDeets}
                 {signUpModal}
 
-                <GMap issues={this.state.issues} />
+                <GMap
+                    issues={this.state.issues}
+                    viewIssueDetails={this.state.viewIssueDetails}
+                />
                 <br />
                 <div className="search-issues-container">
                     <Search
@@ -222,7 +228,6 @@ class App extends Component {
         } else {
             userType = "user";
         }
-        console.log(issue);
         axios
             .post("/issues", {
                 issue: issue,
@@ -410,8 +415,10 @@ class App extends Component {
     }
 
     viewIssueDetails(props) {
-        console.log("app", props);
         this.setState({ viewIssueDetails: true, currentIssueArray: props });
+    }
+    hideViewIssueDetails() {
+        this.setState({ viewIssueDetails: false });
     }
 
     openModal() {

@@ -3,7 +3,11 @@
 
 .search-issues-container {
   margin: 0 auto;
-  width: 95vw; }
+  width: 95vw;
+  position: absolute;
+  top: 59vh;
+  height: 41vh;
+  overflow-y: scroll; }
 
 .issues-header {
   margin: 10px 0; }

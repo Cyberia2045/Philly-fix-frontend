@@ -13,10 +13,9 @@ class SignIn extends Component {
         this.handleSignIn = this.handleSignIn.bind(this);
         this.toggleDispatcher = this.toggleDispatcher.bind(this);
     }
-    render() {        
+    render() {
         return (
             <div>
-                <div>Sign In</div>
                 <input
                     type="text"
                     onChange={this.updateEmail}

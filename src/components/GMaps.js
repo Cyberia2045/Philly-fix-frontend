@@ -23,17 +23,41 @@ class GMap extends Component {
         super(props);
         this.center = { lat: 39.9524, lng: -75.1636 };
         this.zoom = 12;
-        this.styles = {
-            position: "relative",
-            width: "100vw",
-            height: "43vh"
-        };
+
         this.state = {
-            issues: props.issues
+            issues: props.issues,
+            styles: {
+                position: "fixed",
+                width: "100vw",
+                height: "43vh",
+                top: "140px"
+            }
         };
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.viewIssueDetails) {
+            this.setState({
+                styles: {
+                    position: "fixed",
+                    width: "50vw",
+                    height: "43vh",
+                    top: "37vh",
+                    right: "0px",
+                    zIndex: 5
+                }
+            });
+        } else {
+            this.setState({
+                styles: {
+                    position: "fixed",
+                    width: "100vw",
+                    height: "43vh",
+                    top: "14vh",
+                    right: "0px"
+                }
+            });
+        }
         this.setState({ issues: nextProps.issues });
     }
 
@@ -42,9 +66,11 @@ class GMap extends Component {
             return <MarkerComponent lat={issue.lat} lng={issue.lng} />;
         });
 
+        let style;
+
         return (
             <GoogleMapReact
-                style={this.styles}
+                style={this.state.styles}
                 bootstrapURLKeys={{
                     key: "AIzaSyCFrQcAO1Xbv9gTVT9KLDFZnMZznSvhMg4"
                 }}
