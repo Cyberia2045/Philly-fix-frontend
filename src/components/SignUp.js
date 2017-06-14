@@ -38,7 +38,7 @@ class SignUp extends Component {
           width: '80%',
           maxWidth: '600px',
           height: '100%',
-          maxHeight: '250px',
+          maxHeight: '300px',
           position: 'absolute',
           top: '40%',
           left: '50%',
@@ -50,9 +50,10 @@ class SignUp extends Component {
 
         let modalContainer = {
           width: '50%',
-          maxHeight: '100%',
+          height: '100%',
+          maxHeight: '300px',
           margin: '0 auto',
-          marginTop: '5px',
+          marginTop: '10px',
           marginBottom: '10px'
         };
 
