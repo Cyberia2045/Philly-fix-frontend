@@ -95,7 +95,7 @@ class IssuesForm extends Component {
 		return(
 
 			<div style= {modalStyle} className="issues-form-container">
-				<div style= {modalContainer}>	
+				<div style= {modalContainer}>
 					<div style={selectText}>Category: </div><select style={modalSelect} onChange={this.updateCategory} name="category" value={this.state.categories}>
 						{categories}
 					</select>
@@ -111,6 +111,7 @@ class IssuesForm extends Component {
 					<div><button style={modalButton} onClick={this.handleCreateIssue}>Add Your Issue</button></div>
 					<div>{this.state.errorMsg}</div>
 				</div>
+			</div>
 		)
 	}
 
