@@ -3,41 +3,41 @@
 }
 
 .search-issues-container{
-    position: absolute;
-    right: 5px;
+    margin: 0 auto;
+    width: 95vw;
 }
 
-.flex{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-}
 .issues-header{
     margin: 10px 0;
 }
-
+.issues-container{
+    
+}
 .issue {
-    height: 100px;
-    width: 400px;
+    height: 300px;
+    width: 300px;
     border: 2px solid black;
-    margin: 5px 0;
-    padding: 3px;
+    margin: 5px;
 }
 .follow-btn{
-    margin-top: 3px;
-    width: 17%;
+    position: relative;
+    bottom: -155px;
+    right: -221px;
+    width: 20%;
     text-align: center;
 }
 .title{
-    font-size: 18px;
+    font-size: 30px;
+    padding: 20px;
     margin: 0;
-    width: 83%;
+    text-align: center;
+    text-shadow: lightgrey 2px 2px;
 }
 
-.image{
-    height: 70px;
-    width: 70px;
-    margin-right: 10px;
+.issue-thumbnail{
+    background-size: cover;
+    background-position: center;
+    height: 100%;
 }
 .description{
     font-size: 16px;
@@ -45,12 +45,4 @@
 .dispatchers{
     position: relative;
     bottom: -35px;
-}
-
-.my-issues-container{
-    position: absolute;
-    left: 5px;
-    top: 61vh;
-    overflow-y: scroll;
-    height: 39vh;
 }
