@@ -7,11 +7,16 @@ class Search extends Component {
         this.state = {
             neighborhood: "",
             category: "",
+            viewUserIssues: false
         };
         this.resetSearch = this.resetSearch.bind(this);
         this.updateCategory = this.updateCategory.bind(this);
         this.updateNeighborhood = this.updateNeighborhood.bind(this);
         this.handleRunSearch = this.handleRunSearch.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({viewUserIssues: nextProps.viewUserIssues});
     }
 
     render() {
@@ -67,7 +72,8 @@ class Search extends Component {
     handleRunSearch() {
         this.props.runSearch({
             neighborhood: this.state.neighborhood,
-            category: this.state.category
+            category: this.state.category,
+            viewUserIssues: this.state.viewUserIssues
         });
     }
 

@@ -23,6 +23,8 @@ class App extends Component {
             user_issues: [],
             searchResults: [],
             searched: false,
+            searchNeighorhood: "",
+            searchCategory: "",
             dispatcher: false,
             errorMsg: "",
             issuesFormOpen: false,
@@ -51,6 +53,7 @@ class App extends Component {
         var issuesHeader;
         var issuesToList;
         var currentViewIssues;
+        var issuesNav;
         console.log(this.state);
 
         let backdropStyle = {
@@ -92,6 +95,12 @@ class App extends Component {
                   />
               </div>
             );
+            issuesNav = (
+                <div className="issues-nav">
+                    <div onClick={this.viewAllIssues}>All Issues</div>
+                    <div onClick={this.viewUserIssues}>My Issues</div>
+                </div>
+            );
             if (this.state.viewUserIssues) {
 
                 if (this.state.searched) {
@@ -103,7 +112,7 @@ class App extends Component {
                 currentViewIssues = (
                     <div>
                         <Issues
-                            issues={this.state.user_issues}
+                            issues={issuesToList}
                             user={this.state.user}
                             dispatcher={this.state.dispatcher}
                             resolveIssue={this.resolveIssue}
@@ -169,16 +178,14 @@ class App extends Component {
                 {issuesForm}
                 <GMap issues={this.state.issues} />
                 <div className="issues-container">
-                    <div className="issues-nav">
-                        <div onClick={this.viewAllIssues}>All Issues</div>
-                        <div onClick={this.viewUserIssues}>My Issues</div>
-                    </div>
+                    {issuesNav}
                     <h2 className="issues-header">{issuesHeader}</h2>
                     <Search
                         neighborhoods={neighborhoods}
                         categories={categories}
                         runSearch={this.runSearch}
                         resetSearch={this.resetSearch}
+                        viewUserIssues={this.state.viewUserIssues}
                     />
                     {currentViewIssues}
                 </div>
@@ -200,12 +207,26 @@ class App extends Component {
         this.setState({
             viewUserIssues: true
         });
+        if (this.state.searched) {
+            this.runSearch({
+                neighborhood: this.state.searchNeighorhood,
+                category: this.state.searchCategory,
+                viewUserIssues: true
+            });
+        }
     }
 
     viewAllIssues() {
         this.setState({
             viewUserIssues: false
         });
+        if (this.state.searched) {
+            this.runSearch({
+                neighborhood: this.state.searchNeighorhood,
+                category: this.state.searchCategory,
+                viewUserIssues: false
+            });
+        }
     }
 
     loadUserIssues() {
@@ -416,25 +437,24 @@ class App extends Component {
     }
 
     runSearch(props) {
-        let neighborhood = props.neighborhood;
-        let category = props.category;
         let results;
-
-        if (this.state.viewUserIssues) {
+        if (props.viewUserIssues) {
             results = this.state.user_issues;
         } else {
             results = this.state.issues;
         }
 
         results = results.filter(function(issue) {
-            return issue.neighborhood === neighborhood || neighborhood === "";
+            return issue.neighborhood === props.neighborhood || props.neighborhood === "";
         });
         results = results.filter(function(issue) {
-            return issue.category === category || category === "";
+            return issue.category === props.category || props.category === "";
         });
         this.setState({
             searchResults: results,
-            searched: true
+            searched: true,
+            searchNeighorhood: props.neighborhood,
+            searchCategory: props.category
         });
     }
 
