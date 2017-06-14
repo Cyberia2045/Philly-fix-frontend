@@ -14,30 +14,34 @@ class DispatcherVerification extends Component {
         );
     }
     render() {
+
         if (this.state.dispatcher) {
             return (
-                <div>
-                    <input
-                        type="text"
-                        onChange={this.handleUpdateDispatcherVerification}
-                        placeholder="Dispatcher Verification"
-                    />
-                    <input
-                        type="text"
-                        onChange={this.handleUpdateDepartment}
-                        placeholder="Department"
-                    />
-                </div>
+              <div>
+                <input
+                  type="text"
+                  onChange={this.handleUpdateDispatcherVerification}
+                  placeholder="Dispatcher Verification"
+                />
+                <input
+                  type="text"
+                  onChange={this.handleUpdateDepartment}
+                  placeholder="Department"
+                />
+              </div>
             );
+
         } else {
             return null;
         }
     }
+
     handleUpdateDispatcherVerification(event) {
         this.props.updateDispatcherVerification({
             dispatcherVerification: event.target.value
         });
     }
+    
     handleUpdateDepartment(event) {
         this.props.updateDepartment({
             department: event.target.value

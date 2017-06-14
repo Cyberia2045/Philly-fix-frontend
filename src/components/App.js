@@ -125,7 +125,7 @@ class App extends Component {
 
         return (
             <div className="App">
-                {overlay}
+                <div onClick={() => this.closeSignUp()}>{overlay}</div>
                 <div className="error-msg">
                     {this.state.errorMsg}
                 </div>
