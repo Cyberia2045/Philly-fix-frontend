@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import axios from "axios";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 
-import "../css/issues.css";
 import "../css/App.css";
 
 import IssuesForm from "./IssuesForm";
 import Issues from "./Issues";
+import IssueDetails from "./IssueDetails";
 import neighborhoods from "../neighborhoods";
 import categories from "../categories";
 import SignUp from "./SignUp";
@@ -25,7 +25,9 @@ class App extends Component {
             searched: false,
             dispatcher: false,
             errorMsg: "",
-            issuesFormOpen: false
+            issuesFormOpen: false,
+            viewIssueDetails: false,
+            currentIssueArray: []
         };
         this.signOut = this.signOut.bind(this);
         this.signIn = this.signIn.bind(this);
@@ -38,6 +40,7 @@ class App extends Component {
         this.resolveIssue = this.resolveIssue.bind(this);
         this.unresolveIssue = this.unresolveIssue.bind(this);
         this.uploadImage = this.uploadImage.bind(this);
+        this.viewIssueDetails = this.viewIssueDetails.bind(this);
     }
 
     render() {
@@ -46,6 +49,7 @@ class App extends Component {
         var issuesForm;
         var myIssues;
         var issuesToRender;
+        var issueDeets;
         console.log(this.state);
 
         let backdropStyle = {
@@ -106,6 +110,12 @@ class App extends Component {
             }
         }.bind(this)();
 
+        if (this.state.viewIssueDetails) {
+            issueDeets = (
+                <IssueDetails issueArray={this.state.currentIssueArray} />
+            );
+        }
+
         return (
             <div className="App">
                 {overlay}
@@ -115,6 +125,7 @@ class App extends Component {
                 {signOutBtn}
                 {signInOutComponents}
                 {issuesForm}
+                {issueDeets}
 
                 <GMap issues={this.state.issues} />
                 <br />
@@ -133,6 +144,7 @@ class App extends Component {
                         unresolveIssue={this.unresolveIssue}
                         followIssue={this.followIssue}
                         unfollowIssue={this.unfollowIssue}
+                        viewIssueDetails={this.viewIssueDetails}
                     />
                 </div>
             </div>
@@ -370,6 +382,11 @@ class App extends Component {
             searchResults: results,
             searched: true
         });
+    }
+
+    viewIssueDetails(props) {
+        console.log("app", props);
+        this.setState({ viewIssueDetails: true, currentIssueArray: props });
     }
 
     openModal() {
