@@ -1,3 +1,7 @@
+.App {
+  margin-left: -10px;
+  margin-right: -10px; }
+
 .sign-out-btn {
   position: absolute;
   right: 10px;
@@ -8,4 +12,4 @@
   flex-wrap: wrap;
   justify-content: space-around; }
 
-/*# sourceMappingURL=App.css.map */
+/*# sourceMappingURL=app.css.map */
