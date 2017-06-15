@@ -4,7 +4,6 @@ import "../css/issueDetails.css";
 class IssueDetails extends Component {
     constructor(props) {
         super(props);
-        console.log("issuedetails.js", props);
         this.state = {
             issue: props.issueArray[0].issue,
             attnIssue: props.issueArray[1].attnIssue,
@@ -16,6 +15,8 @@ class IssueDetails extends Component {
         );
     }
     render() {
+        console.log("issuedetails.js", this.props.issueArray[3].btnId);
+
         var btn;
         if (this.state.btnId === "Resolve") {
             btn = (

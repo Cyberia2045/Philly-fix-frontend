@@ -1,3 +1,32 @@
+#PhillyFIX
+###Connecting residents to public services and improving our city
+
+##Introduction
+This app was built using a Ruby on Rails back end with a React.js front end. The back end is available at www.github.com/Cyberia2045/philly-fix-backend
+
+This app allows users to create accounts and view issues on a dashboard that can be filtered by neighborhood or issue type. Users can create new issues as well as follow exisiting ones. City dispatchers can also create accounts and view the same issues, selecting them with a Resolve button. Users and dispatchers will both be able to see how many users and dispatchers are following or resolving an issue.
+
+##Components
+App.js -- The controller component. This holds booleans, objects, and arrays of objects in its state that control what gets rendered by being passed into components.
+
+SignUp.js -- enables signing up, incorporates DispatcherVerification.js if user signing up is a dispatcher
+
+SignIn.js -- enables signing in, incorporates DispatcherVerification.js if user signing in is a dispatcher
+
+Issues.js -- renders all issues
+
+IssuesForm.js -- allows users to create new issues
+
+IssueDetails -- renders enlarged photo and complete issue information
+
+GMaps.js -- Renders map of Philadelphia with a point for each issue
+
+Search.js -- filters issues by category and/or neighborhood
+
+
+
+
+##React Documentation
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
