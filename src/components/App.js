@@ -74,6 +74,7 @@ class App extends Component {
         let newIssueButton = {
           position: "absolute",
           zIndex: "10",
+          top: "30",
           right: "0"
         }
 
@@ -234,6 +235,7 @@ class App extends Component {
               />
               <br />
               <div className="search-issues-container">
+                {issuesNav}
                   <Search
                       neighborhoods={neighborhoods}
                       categories={categories}
