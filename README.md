@@ -23,6 +23,8 @@ GMaps.js -- Renders map of Philadelphia with a point for each issue
 
 Search.js -- filters issues by category and/or neighborhood
 
+###See IssuesForm.js for extensive comments concerning that component
+
 
 
 
