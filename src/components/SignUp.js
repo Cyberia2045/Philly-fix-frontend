@@ -31,30 +31,29 @@ class SignUp extends Component {
     }
 
     render() {
-
-// ----------Sign Up Modal Styling----------
+        // ----------Sign Up Modal Styling----------
 
         let signUpModalStyle = {
-          width: '80%',
-          maxWidth: '600px',
-          height: '100%',
-          maxHeight: '300px',
-          position: 'absolute',
-          top: '40%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          zIndex: '9999',
-          background: 'rgba(0,0,0,0.7)',
-          borderRadius: '10px'
+            width: "80%",
+            maxWidth: "600px",
+            height: "100%",
+            maxHeight: "300px",
+            position: "absolute",
+            top: "40%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: "9999",
+            background: "rgba(0,0,0,0.7)",
+            borderRadius: "10px"
         };
 
         let modalContainer = {
-          width: '50%',
-          height: '100%',
-          maxHeight: '300px',
-          margin: '0 auto',
-          marginTop: '10px',
-          marginBottom: '10px'
+            width: "50%",
+            height: "100%",
+            maxHeight: "300px",
+            margin: "0 auto",
+            marginTop: "10px",
+            marginBottom: "10px"
         };
 
         let modalInput = {
@@ -66,93 +65,113 @@ class SignUp extends Component {
         };
 
         let dispatcherTextContainer = {
-          width: "260px",
-          margin: "0 auto",
-          marginTop: "5px"
-        }
+            width: "260px",
+            margin: "0 auto",
+            marginTop: "5px"
+        };
 
         let dispatcherText = {
-          color: "white",
-          padding: "5px",
-          textAlign: "center"
-        }
+            color: "white",
+            padding: "5px",
+            textAlign: "center"
+        };
 
         let dispatcherToggle = {
-          width: "15px",
-          margin: "0 auto"
-        }
+            width: "15px",
+            margin: "0 auto"
+        };
 
         let buttonContainer = {
-          width: '60px',
-          margin: "0 auto",
-          marginBottom: "5px"
-        }
+            width: "60px",
+            margin: "0 auto",
+            marginBottom: "5px"
+        };
 
         let modalButton = {
             backgroundColor: "rgba(255,255,255,0.8)",
             borderRadius: "10px"
         };
 
-// ----------End Styling----------
+        // ----------End Styling----------
 
         return (
             <div style={signUpModalStyle}>
-              <div style={modalContainer}>
-                <div> {this.state.errorMsg} </div>
-                <input style={modalInput}
-                    type="text"
-                    onChange={this.updateFirstName}
-                    placeholder="First Name"
-                    value={this.state.first_name}
-                    required
-                />
-                <input style={modalInput}
-                    type="text"
-                    onChange={this.updateLastName}
-                    placeholder="Last Name"
-                    value={this.state.last_name}
-                    required
-                />
-                <input style={modalInput}
-                    type="text"
-                    onChange={this.updateEmail}
-                    placeholder="Email"
-                    value={this.state.email}
-                    required
-                />
-                <input style={modalInput}
-                    type="text"
-                    onChange={this.updatePassword}
-                    placeholder="Password"
-                    value={this.state.password}
-                    required
-                />
-                <input style={modalInput}
-                    type="text"
-                    onChange={this.updateSecondPassword}
-                    placeholder="Repeat Password"
-                    value={this.state.second_password}
-                    required
-                />
-                <input style={modalInput}
-                    type="text"
-                    onChange={this.updateAddress}
-                    placeholder="Address"
-                    value={this.state.address}
-                    required
-                />
-                <br />
-                <div style={dispatcherTextContainer}><label style={dispatcherText}>If you are a dispatcher, check this box:</label></div>
-                <div style={dispatcherToggle}><input type="checkbox" onChange={this.toggleDispatcher} /></div>
-                <br />
-                <DispatcherVerification
-                    dispatcher={this.state.dispatcher}
-                    updateDispatcherVerification={
-                        this.updateDispatcherVerification
-                    }
-                    updateDepartment={this.updateDepartment}
-                />
-                <div style={buttonContainer}> <button style={modalButton} onClick={this.handleSignUp}>Sign Up</button></div>
+                <div style={modalContainer}>
+                    <div> {this.state.errorMsg} </div>
+                    <input
+                        style={modalInput}
+                        type="text"
+                        onChange={this.updateFirstName}
+                        placeholder="First Name"
+                        value={this.state.first_name}
+                        required
+                    />
+                    <input
+                        style={modalInput}
+                        type="text"
+                        onChange={this.updateLastName}
+                        placeholder="Last Name"
+                        value={this.state.last_name}
+                        required
+                    />
+                    <input
+                        style={modalInput}
+                        type="text"
+                        onChange={this.updateEmail}
+                        placeholder="Email"
+                        value={this.state.email}
+                        required
+                    />
+                    <input
+                        style={modalInput}
+                        type="text"
+                        onChange={this.updatePassword}
+                        placeholder="Password"
+                        value={this.state.password}
+                        required
+                    />
+                    <input
+                        style={modalInput}
+                        type="text"
+                        onChange={this.updateSecondPassword}
+                        placeholder="Repeat Password"
+                        value={this.state.second_password}
+                        required
+                    />
+                    <input
+                        style={modalInput}
+                        type="text"
+                        onChange={this.updateAddress}
+                        placeholder="Address"
+                        value={this.state.address}
+                        required
+                    />
+                    <br />
+                    <div style={dispatcherTextContainer}>
+                        <label style={dispatcherText}>
+                            If you are a dispatcher, check this box:
+                        </label>
+                    </div>
+                    <div style={dispatcherToggle}>
+                        <input
+                            type="checkbox"
+                            onChange={this.toggleDispatcher}
+                        />
+                    </div>
+                    <br />
+                    <DispatcherVerification
+                        dispatcher={this.state.dispatcher}
+                        updateDispatcherVerification={
+                            this.updateDispatcherVerification
+                        }
+                        updateDepartment={this.updateDepartment}
+                    />
+                    <div style={buttonContainer}>
+                        {" "}
+                        <button style={modalButton} onClick={this.handleSignUp}>
+                            Sign Up
+                        </button>
+                    </div>
                 </div>
             </div>
         );

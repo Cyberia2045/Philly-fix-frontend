@@ -63,34 +63,6 @@ class App extends Component {
         var issuesToRender;
         var issueDeets;
 
-        let backdropStyle = {
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-            top: "0px",
-            left: "0px",
-            zIndex: "9998",
-            background: "rgba(0, 0, 0, 0.8)"
-        };
-
-        let newIssueButton = {
-            position: "absolute",
-            zIndex: "10",
-            right: "10",
-            top: "70"
-        };
-
-        let signUpButton = {
-            position: "absolute",
-            zIndex: "10",
-            left: "25",
-            top: "60",
-            width: "100px",
-            background: "rgba(255, 255, 255, 0.5)",
-            color: "white",
-            borderRadius: "10px"
-        };
-
         if (this.state.searched) {
             issuesToList = this.state.searchResults;
         } else {
@@ -106,7 +78,7 @@ class App extends Component {
             issuesForm = (
                 <div>
                     <button
-                        style={newIssueButton}
+                        className="newIssueButton"
                         onClick={() => this.openModal()}
                     >
                         Create New Issue
@@ -203,9 +175,9 @@ class App extends Component {
 
         var overlay = function() {
             if (this.state.issuesFormOpen) {
-                return <div style={backdropStyle} />;
+                return <div className="backdropStyle" />;
             } else if (this.state.signUpFormOpen) {
-                return <div style={backdropStyle} />;
+                return <div className="backdropStyle" />;
             } else {
                 return <span />;
             }
@@ -227,7 +199,10 @@ class App extends Component {
                 <div className="error-msg">
                     {this.state.errorMsg}
                 </div>
-                <button style={signUpButton} onClick={() => this.openSignUp()}>
+                <button
+                    className="signUpButton"
+                    onClick={() => this.openSignUp()}
+                >
                     Join
                 </button>
                 {signOutBtn}

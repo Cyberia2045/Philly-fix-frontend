@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "../css/signIn.css";
 
 class SignIn extends Component {
     constructor(props) {
@@ -14,55 +15,10 @@ class SignIn extends Component {
         this.toggleDispatcher = this.toggleDispatcher.bind(this);
     }
     render() {
-        let signInContainer = {
-            position: "absolute",
-            top: "0",
-            right: "10",
-            width: "40%",
-            maxWidth: "300px",
-            height: "100%"
-        };
-
-        let inputStyle = {
-            position: "relative",
-            zIndex: "10",
-            backgroundColor: "rgba(255,255,255,0.5)",
-            color: "white",
-            border: "2px solid white",
-            margin: "1px",
-            width: "100%",
-            maxWidth: "250px",
-            borderRadius: "10px",
-            right: "0"
-        };
-
-        let dispatcherTextContainer = {
-            position: "relative",
-            zIndex: "10",
-            left: "28"
-        };
-
-        let dispatcherText = {
-            color: "white"
-        };
-
-        let signInButton = {
-            background: "rgba(255, 255, 255, 0.5)",
-            color: "white",
-            borderRadius: "10px"
-        };
-
-        let buttonContainer = {
-            position: "relative",
-            zIndex: "10",
-            left: "34%",
-            top: "0"
-        };
-
         return (
-            <div style={signInContainer}>
+            <div className="signInContainer">
                 <input
-                    style={inputStyle}
+                    className="inputStyle"
                     type="text"
                     onChange={this.updateEmail}
                     placeholder="Email"
@@ -70,22 +26,25 @@ class SignIn extends Component {
                 />
 
                 <input
-                    style={inputStyle}
+                    className="inputStyle"
                     type="text"
                     onChange={this.updatePassword}
                     placeholder="Password"
                     required
                 />
 
-                <div style={dispatcherTextContainer}>
-                    <label style={dispatcherText}>
+                <div className="dispatcherTextContainer">
+                    <label className="dispatcherText">
                         Dispatchers, check this box:
                     </label>
                     <input type="checkbox" onChange={this.toggleDispatcher} />
                 </div>
 
-                <div style={buttonContainer}>
-                    <button style={signInButton} onClick={this.handleSignIn}>
+                <div className="buttonContainer">
+                    <button
+                        className="signInButton"
+                        onClick={this.handleSignIn}
+                    >
                         Sign In
                     </button>
                 </div>
