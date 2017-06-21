@@ -1,6 +1,7 @@
 .details-issue{
     width: 50vw;
-    height: 25vh;
+    min-width: 270px;
+    height: 23.7vh;
     position: fixed;
     right: 0px;
     top: 100px;
@@ -12,34 +13,36 @@
     top: 100px;
     left: 0;
     width: 50vw;
-    height: 68vh;
+    height: 66vh;
     background-size: cover;
     background-position: center;
 }
 .details-text{
-    padding: 10px;
+    padding: 5px 10px;
 }
 .details-title{
     width: 100%;
     font-size: 24px;
-    margin: 5px 0;
+    margin: 0;
 }
 .details-description{
-    width: 100%;
+    width: 130px;
+    height: 95px;
 }
 .details-users{
     position: absolute;
-    bottom: 25px;
-    left: 10px;
+    bottom: 75px;
+    right: 12px;
 }
 .details-dispatchers{
     position: absolute;
-    bottom: 25px;
+    bottom: 55px;
+    right: 12px;
 }
 .details-follow{
     position: absolute;
-    bottom: 80px;
-    right: 51px;
+    bottom: 100px;
+    right: 30px;
 }
 .details-close{
     position: absolute;
@@ -49,4 +52,21 @@
     border: 1px solid black;
     padding: 10px;
     border-radius: 10px;
+}
+@media all and (max-width: 650px){
+    .details-follow, .details-dispatchers, .details-users{
+        position: static;
+    }
+    .details-description{
+        height:auto;
+    }
+}
+@media all and (max-width: 595px){
+    .details-issue{
+        width: 100vw;
+        top: 50px;
+    }
+    .details-image{
+        display: none;
+    }
 }

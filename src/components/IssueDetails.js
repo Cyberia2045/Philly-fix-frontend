@@ -15,8 +15,6 @@ class IssueDetails extends Component {
         );
     }
     render() {
-        console.log("issuedetails.js", this.props.issueArray[3].btnId);
-
         var btn;
         if (this.state.btnId === "Resolve") {
             btn = (
@@ -57,7 +55,7 @@ class IssueDetails extends Component {
         }
         return (
             <div style={this.state.attnIssue} className="details-issue">
-                <div className="details-text flex">
+                <div className="details-text">
                     <h4 className="details-title">
                         {this.state.issue.category}
                         {" "}

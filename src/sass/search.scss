@@ -1,12 +1,26 @@
 .search-container{
     justify-content: space-around;
-    width: 80%;
-    max-width: 665px;
-    min-width: 583px;
+    width: 625px;
+    padding-left: 5px;
 }
 .search-category{
     width: 110px;
 }
 .search-neighborhood{
     width: 150px;
+}
+@media all and (max-width: 680px){
+    .search-container{
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 320px;
+        margin: 0 auto;
+    }
+    .search-category{
+        width: 120px;
+    }
+    .search-neighborhood{
+        width: 160px;
+    }
 }

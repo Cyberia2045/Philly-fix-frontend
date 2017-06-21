@@ -2,69 +2,59 @@ import React, { Component } from "react";
 import axios from "axios";
 
 class IssuesForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            neighborhood: "",
+            category: "",
+            address: "",
+            lat: "",
+            lng: "",
+            description: "",
+            errorMsg: ""
+        };
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			neighborhood: "",
-			category: "",
-			address: "",
-			lat: "",
-			lng: "",
-			description: "",
-			errorMsg: ""
-		}
+        this.updateNeighborhood = this.updateNeighborhood.bind(this);
+        this.updateCategory = this.updateCategory.bind(this);
+        this.updateAddress = this.updateAddress.bind(this);
+        this.updateDescription = this.updateDescription.bind(this);
+        this.handleCreateIssue = this.handleCreateIssue.bind(this);
+    }
 
-		this.updateNeighborhood = this.updateNeighborhood.bind(this);
-		this.updateCategory = this.updateCategory.bind(this);
-		this.updateAddress = this.updateAddress.bind(this);
-		this.updateDescription = this.updateDescription.bind(this);
-		this.handleCreateIssue = this.handleCreateIssue.bind(this);
+    render() {
+        if (this.props.isOpen === false) return null;
 
-	}
+        let neighborhoods = this.props.neighborhoods.map(function(
+            neighborhood,
+            index
+        ) {
+            return (
+                <option key={index} value={neighborhood}>{neighborhood}</option>
+            );
+        });
 
-	render() {
+        let categories = this.props.categories.map(function(category, index) {
+            return <option key={index} value={category}>{category}</option>;
+        });
 
-		if (this.props.isOpen === false)
-			return null
+        // ----------Modal Styling----------
 
-		let neighborhoods = this.props.neighborhoods.map(function(neighborhood, index) {
-
-		return(
-					<option key={index} value={neighborhood}>{neighborhood}</option>
-					)
-				})
-
-		let categories = this.props.categories.map(function(category, index) {
-
-			return(
-						<option key={index} value={category}>{category}</option>
-						)
-				})
-
-// ----------Modal Styling----------
-
-		    let modalStyle = {
-		    	width: '80%',
-		    	maxWidth: '600px',
-		    	height: '100%',
-		    	maxHeight: '250px',
-          position: 'absolute',
-          top: '40%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          zIndex: '9999',
-          background: 'rgba(0,0,0,0.7)',
-          borderRadius: '10px'
-        }
+        let modalStyle = {
+            width: "80%",
+            maxWidth: "600px",
+            position: "absolute",
+            top: "40%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: "9999",
+            background: "rgba(0,0,0,0.7)",
+            borderRadius: "10px"
+        };
 
         let modalContainer = {
-        	width: '50%',
-        	maxHeight: '100%',
-        	margin: '0 auto',
-        	marginTop: '5px',
-        	marginBottom: '10px'
-        }
+            width: "50%",
+            margin: "50px auto"
+        };
 
         let modalSelect = {
             backgroundColor: "rgba(255,255,255,0.8)"

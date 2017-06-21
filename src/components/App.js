@@ -1,3 +1,5 @@
+//why aren't media queries in issueDetails.scss getting applied?
+
 import React, { Component } from "react";
 import axios from "axios";
 import "../css/App.css";
@@ -14,79 +16,80 @@ import GMap from "./GMaps";
 import Header from "./Header";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-        issues: [],
-        user: null,
-        user_issues: [],
-        searchResults: [],
-        searched: false,
-        searchNeighorhood: "",
-        searchCategory: "",
-        dispatcher: false,
-        errorMsg: "",
-        issuesFormOpen: false,
-        viewUserIssues: false,
-        viewIssueDetails: false,
-        currentIssueArray: [],
-        signUpFormOpen: false
-      };
-      this.viewUserIssues = this.viewUserIssues.bind(this);
-      this.viewAllIssues = this.viewAllIssues.bind(this);
-      this.resetSearch = this.resetSearch.bind(this);
-      this.signOut = this.signOut.bind(this);
-      this.signIn = this.signIn.bind(this);
-      this.signUp = this.signUp.bind(this);
-      this.createIssue = this.createIssue.bind(this);
-      this.loadUserIssues = this.loadUserIssues.bind(this);
-      this.runSearch = this.runSearch.bind(this);
-      this.followIssue = this.followIssue.bind(this);
-      this.unfollowIssue = this.unfollowIssue.bind(this);
-      this.resolveIssue = this.resolveIssue.bind(this);
-      this.unresolveIssue = this.unresolveIssue.bind(this);
-      this.uploadImage = this.uploadImage.bind(this);
-      this.viewIssueDetails = this.viewIssueDetails.bind(this);
-      this.hideViewIssueDetails = this.hideViewIssueDetails.bind(this);
+    constructor(props) {
+        super(props);
+        this.state = {
+            issues: [],
+            user: null,
+            user_issues: [],
+            searchResults: [],
+            searched: false,
+            searchNeighorhood: "",
+            searchCategory: "",
+            dispatcher: false,
+            errorMsg: "",
+            issuesFormOpen: false,
+            viewUserIssues: false,
+            viewIssueDetails: false,
+            currentIssueArray: [],
+            signUpFormOpen: false
+        };
+        this.viewUserIssues = this.viewUserIssues.bind(this);
+        this.viewAllIssues = this.viewAllIssues.bind(this);
+        this.resetSearch = this.resetSearch.bind(this);
+        this.signOut = this.signOut.bind(this);
+        this.signIn = this.signIn.bind(this);
+        this.signUp = this.signUp.bind(this);
+        this.createIssue = this.createIssue.bind(this);
+        this.loadUserIssues = this.loadUserIssues.bind(this);
+        this.runSearch = this.runSearch.bind(this);
+        this.followIssue = this.followIssue.bind(this);
+        this.unfollowIssue = this.unfollowIssue.bind(this);
+        this.resolveIssue = this.resolveIssue.bind(this);
+        this.unresolveIssue = this.unresolveIssue.bind(this);
+        this.uploadImage = this.uploadImage.bind(this);
+        this.viewIssueDetails = this.viewIssueDetails.bind(this);
+        this.hideViewIssueDetails = this.hideViewIssueDetails.bind(this);
     }
 
     render() {
-      var signOutBtn;
-      var signInComponent;
-      var issuesForm;
-      var issuesHeader;
-      var issuesToList;
-      var currentViewIssues;
-      var issuesNav;
-      var issuesToRender;
-      var issueDeets;
+        var signOutBtn;
+        var signInComponent;
+        var issuesForm;
+        var issuesHeader;
+        var issuesToList;
+        var currentViewIssues;
+        var issuesNav;
+        var issuesToRender;
+        var issueDeets;
 
-      let backdropStyle = {
-        position: "absolute",
-        width: "100%",
-        height: "100%",
-        top: "0px",
-        left: "0px",
-        zIndex: "9998",
-        background: "rgba(0, 0, 0, 0.8)"
+        let backdropStyle = {
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            top: "0px",
+            left: "0px",
+            zIndex: "9998",
+            background: "rgba(0, 0, 0, 0.8)"
         };
 
         let newIssueButton = {
-          position: "absolute",
-          zIndex: "10",
-          right: "0"
-        }
+            position: "absolute",
+            zIndex: "10",
+            right: "10",
+            top: "70"
+        };
 
         let signUpButton = {
-          position: "absolute",
-          zIndex: "10",
-          left: "10",
-          top: "60",
-          width: "100px",
-          background: "rgba(255, 255, 255, 0.5)",
-          color: "white",
-          borderRadius: "10px"
-        }
+            position: "absolute",
+            zIndex: "10",
+            left: "25",
+            top: "60",
+            width: "100px",
+            background: "rgba(255, 255, 255, 0.5)",
+            color: "white",
+            borderRadius: "10px"
+        };
 
         if (this.state.searched) {
             issuesToList = this.state.searchResults;
@@ -102,7 +105,10 @@ class App extends Component {
             );
             issuesForm = (
                 <div>
-                    <button style={newIssueButton} onClick={() => this.openModal()}>
+                    <button
+                        style={newIssueButton}
+                        onClick={() => this.openModal()}
+                    >
                         Create New Issue
                     </button>
                     <IssuesForm
@@ -215,33 +221,35 @@ class App extends Component {
         }
 
         return (
-          <div className="App">
-              <Header />
-              <div onClick={() => this.closeModal()}>{overlay}</div>
-              <div className="error-msg">
-                  {this.state.errorMsg}
-              </div>
-              <button style={signUpButton} onClick={() => this.openSignUp()}>Become A Member</button>
-              {signOutBtn}
-              {signInComponent}
-              {issuesForm}
-              {issueDeets}
-              {signUpModal}
+            <div className="App">
+                <Header />
+                <div onClick={() => this.closeModal()}>{overlay}</div>
+                <div className="error-msg">
+                    {this.state.errorMsg}
+                </div>
+                <button style={signUpButton} onClick={() => this.openSignUp()}>
+                    Join
+                </button>
+                {signOutBtn}
+                {signInComponent}
+                {issuesForm}
+                {issueDeets}
+                {signUpModal}
 
-              <GMap
-                  issues={this.state.issues}
-                  viewIssueDetails={this.state.viewIssueDetails}
-              />
-              <br />
-              <div className="search-issues-container">
-                  <Search
-                      neighborhoods={neighborhoods}
-                      categories={categories}
-                      runSearch={this.runSearch}
-                      resetSearch={this.resetSearch}
-                      viewUserIssues={this.state.viewUserIssues}
-                  />
-                  {currentViewIssues}
+                <GMap
+                    issues={this.state.issues}
+                    viewIssueDetails={this.state.viewIssueDetails}
+                />
+                <br />
+                <div className="search-issues-container">
+                    <Search
+                        neighborhoods={neighborhoods}
+                        categories={categories}
+                        runSearch={this.runSearch}
+                        resetSearch={this.resetSearch}
+                        viewUserIssues={this.state.viewUserIssues}
+                    />
+                    {currentViewIssues}
                 </div>
             </div>
         );
@@ -357,7 +365,6 @@ class App extends Component {
     }
 
     signIn(user) {
-        console.log(user);
         var url;
         if (user.dispatcher) {
             url = "/dispatchers";

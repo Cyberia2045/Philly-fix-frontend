@@ -28,7 +28,7 @@ class GMap extends Component {
             styles: {
                 position: "fixed",
                 width: "100vw",
-                height: "43vh",
+                height: "45vh",
                 top: "140px"
             }
         };

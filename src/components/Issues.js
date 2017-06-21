@@ -106,18 +106,18 @@ class Issues extends Component {
                         { issue },
                         { attnIssue },
                         { thumbImg },
-                        { btnId }
+                        { btnId },
+                        { attnDispatcher },
+                        { numDispatchersMsg }
                     ]);
                 }
                 return (
-                    <div
-                        key={index}
-                        className="issue"
-                        onClick={handleViewIssueDetails.bind(this)}
-                        style={attnIssue}
-                    >
+                    <div key={index} className="issue" style={attnIssue}>
                         <div className="issue-thumbnail" style={thumbImg}>
-                            <h4 className="title">
+                            <h4
+                                onClick={handleViewIssueDetails.bind(this)}
+                                className="title"
+                            >
                                 {issue.category} in {issue.neighborhood}
                             </h4>
                             <div className="follow-btn">{btn}</div>
